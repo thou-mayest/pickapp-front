@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             BackgroundImageSource="background2.png"
+             Title="Pro account"
+             x:Class="pikappDes.ProAccPage">
+    <ContentPage.Content>
+        <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+            <Frame Margin="8" Padding="10" BackgroundColor="White" Opacity="0.65" CornerRadius="30" HorizontalOptions="Center" VerticalOptions="Center">
+                <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+
+                    <Label HorizontalOptions="Center" VerticalOptions="Center" FontSize="Large" TextColor="Black" Text="For more info, password reset, and account activation call:  ">
+
+                    </Label>
+                    <Label HorizontalOptions="Center" VerticalOptions="Center" FontSize="Large" TextColor="Black" Text="52 991 985"/>
+                    
+                </StackLayout>
+            </Frame>
+            <Frame HeightRequest="40" CornerRadius="20" Margin="25" Padding="5" VerticalOptions="Start" Opacity="0.8">
+                <Entry x:Name="Key_entry" Placeholder="Activation Key" VerticalOptions="Start" MaxLength="8"  HorizontalTextAlignment="Center"></Entry>
+            </Frame>
+            <Button x:Name="LogInButt" HeightRequest="45" WidthRequest="220" CornerRadius="20" BackgroundColor="#FEDFB6" Margin="6" Text="submit " VerticalOptions="Center" HorizontalOptions="Center" Clicked="LogInButt_Clicked_1"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

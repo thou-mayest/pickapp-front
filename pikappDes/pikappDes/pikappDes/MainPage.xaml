@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             BackgroundImageSource="background2.png"
+             x:Class="pikappDes.MainPage"
+             NavigationPage.HasNavigationBar="False">
+
+    <StackLayout>
+
+        <Frame HorizontalOptions="Start" Padding="0" HeightRequest="100" WidthRequest="100" CornerRadius="50" BackgroundColor="Black" Opacity="0.7">
+            <Image Margin="0" Source="logo1.png" WidthRequest="70" HeightRequest="70" VerticalOptions="Center" HorizontalOptions="Center">
+
+            </Image>
+        </Frame>
+        
+        <Frame HasShadow="True" BorderColor="Black" BackgroundColor="#E3BD24" CornerRadius="60" HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+            <Label Text="PICKAPP" FontAttributes="Bold" FontSize="Large" TextColor="black" HorizontalOptions="Center"></Label>
+        </Frame>
+
+        <Button Margin="10,10,10,5" CornerRadius="50" VerticalOptions="End" Text="Login" TextColor="black" FontSize="Medium" BackgroundColor="#E3BD24" Clicked="Button_Clicked" WidthRequest="200">
+            
+        </Button>
+        <Button x:Name="ContactButton" Margin="10,0,10,20" CornerRadius="50" VerticalOptions="End" Text="Contact Us" TextColor="white" FontSize="Medium" BackgroundColor="#273251" Clicked="ContactButton_Clicked">
+            
+        </Button>
+        
+
+    </StackLayout>
+
+</ContentPage>

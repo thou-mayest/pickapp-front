@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundImageSource="background.jpg"     
+             x:Class="pikappDes.NewMainMaster"
+             xmlns:pages="clr-namespace:pikappDes">
+
+    <MasterDetailPage.ToolbarItems>
+        <ToolbarItem x:Name="Free_button" IconImageSource="OnToggle.png" Clicked="Free_Clicked"></ToolbarItem>
+        <ToolbarItem Name="msg_button" IconImageSource="msg.png" Clicked="msg_button_Clicked"></ToolbarItem>
+        
+    </MasterDetailPage.ToolbarItems>
+  <MasterDetailPage.Master>
+    <pages:MasterTest x:Name="MasterPage" />
+  </MasterDetailPage.Master>
+  <!--<MasterDetailPage.Detail>
+    <NavigationPage>
+      <x:Arguments>
+        <pages:NewMainMasterDetail />
+      </x:Arguments>
+    </NavigationPage>
+  </MasterDetailPage.Detail>-->
+</MasterDetailPage>
