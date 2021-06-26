@@ -18,6 +18,11 @@ namespace pikappDes
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class NewMainMasterDetail : ContentPage
     {
+
+
+        /// <summary>
+        ///                 THIS IS MAIN MAP LOGIC
+        /// </summary>
         public NewMainMasterDetail()
         {
             InitializeComponent();
@@ -195,7 +200,7 @@ namespace pikappDes
                     Type = PinType.Place,
 
                     Phone = item.phone,
-                    Position = new Position(Convert.ToDouble(item.pos.Split('/')[0].Replace('.',',')), Convert.ToDouble(item.pos.Split('/')[1].Replace('.',',')))
+                    Position = new Position(Convert.ToDouble(item.pos.Split('/')[0].Replace('.',',')), Convert.ToDouble(item.pos.Split('/')[1].Replace('.',','))) //change according to culture . Or ,
 
                 };
 
@@ -231,6 +236,8 @@ namespace pikappDes
             client.DefaultRequestHeaders.Clear();
             client.DefaultRequestHeaders.Add("REQ_TYPE", "UPDATE_pos");
             client.DefaultRequestHeaders.Add("REQ_USR", Preferences.Get("USR", "C"));
+
+            
 
             try
             {

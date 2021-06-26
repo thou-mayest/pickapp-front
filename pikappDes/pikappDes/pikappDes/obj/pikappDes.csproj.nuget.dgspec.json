@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\brahmi\\Desktop\\projects\\PickApp\\dev\\pickapp project\\pickapp\\pikappDes\\pikappDes\\pikappDes\\pikappDes.csproj": {}
+    "C:\\Users\\brahmi\\Desktop\\projects\\PickApp\\dev\\pickapp project\\pickapp-front\\pikappDes\\pikappDes\\pikappDes\\pikappDes.csproj": {}
   },
   "projects": {
-    "C:\\Users\\brahmi\\Desktop\\projects\\PickApp\\dev\\pickapp project\\pickapp\\pikappDes\\pikappDes\\pikappDes\\pikappDes.csproj": {
+    "C:\\Users\\brahmi\\Desktop\\projects\\PickApp\\dev\\pickapp project\\pickapp-front\\pikappDes\\pikappDes\\pikappDes\\pikappDes.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\brahmi\\Desktop\\projects\\PickApp\\dev\\pickapp project\\pickapp\\pikappDes\\pikappDes\\pikappDes\\pikappDes.csproj",
+        "projectUniqueName": "C:\\Users\\brahmi\\Desktop\\projects\\PickApp\\dev\\pickapp project\\pickapp-front\\pikappDes\\pikappDes\\pikappDes\\pikappDes.csproj",
         "projectName": "pikappDes",
-        "projectPath": "C:\\Users\\brahmi\\Desktop\\projects\\PickApp\\dev\\pickapp project\\pickapp\\pikappDes\\pikappDes\\pikappDes\\pikappDes.csproj",
+        "projectPath": "C:\\Users\\brahmi\\Desktop\\projects\\PickApp\\dev\\pickapp project\\pickapp-front\\pikappDes\\pikappDes\\pikappDes\\pikappDes.csproj",
         "packagesPath": "C:\\Users\\brahmi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\brahmi\\Desktop\\projects\\PickApp\\dev\\pickapp project\\pickapp\\pikappDes\\pikappDes\\pikappDes\\obj\\",
+        "outputPath": "C:\\Users\\brahmi\\Desktop\\projects\\PickApp\\dev\\pickapp project\\pickapp-front\\pikappDes\\pikappDes\\pikappDes\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
