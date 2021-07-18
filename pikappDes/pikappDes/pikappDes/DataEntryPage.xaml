@@ -39,7 +39,7 @@
                                 <Entry x:Name="Password" IsPassword="True" Placeholder="mot de passe" VerticalOptions="Start" HorizontalTextAlignment="Center"></Entry>
                             </Frame>
 
-                            <Button x:Name="LogInButt" HeightRequest="45" WidthRequest="220" CornerRadius="20" BackgroundColor="#FEDFB6" Margin="6" Text="Login " VerticalOptions="Center" HorizontalOptions="Center" Clicked="Button_Clicked"></Button>
+                            <Button x:Name="LogInButt" HeightRequest="45" WidthRequest="220" CornerRadius="20" BackgroundColor="#FEDFB6" Margin="6" Text="Create account" VerticalOptions="Center" HorizontalOptions="Center" Clicked="Button_Clicked"></Button>
                         </StackLayout>
                         
                         

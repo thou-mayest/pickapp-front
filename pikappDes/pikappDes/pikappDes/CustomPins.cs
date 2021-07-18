@@ -2,17 +2,21 @@
 using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms.Maps;
+using pikappDes.Utils.modals;
 
 namespace pikappDes
 {
     public class CustomPins : Pin
     {
-        public string Name { get; set; }
-        
-        public int Phone { get; set; }
-        public string Pos { get; set; }
-        public bool Free { get; set; }
-        public string Pass { get; set; }
+        public string name { get; set; }
+        public string phone { get; set; }
+
+        public string pos { get; set; }
+
+        public bool free { get; set; }
+
+        public string UID { get; set; }
+        public ClienType type { get; set; }
 
     }
 }

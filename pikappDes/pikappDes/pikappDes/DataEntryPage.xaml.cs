@@ -8,6 +8,8 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Net.Http;
 using Xamarin.Essentials;
+using pikappDes.Utils.modals;
+using pikappDes.Utils;
 
 namespace pikappDes
 {
@@ -40,7 +42,7 @@ namespace pikappDes
                 //uri = await Utility.GetUri();
                 if(uri != null)
                 {
-                    LogInButt.Text = "Login";
+                    LogInButt.Text = "Create Account";
                     LogInButt.IsEnabled = true;
                     //await DisplayAlert("FINE", uri.ToString(), "Ok"); 
                 }
@@ -67,34 +69,45 @@ namespace pikappDes
                 var LoadingPage = new LoadingPage();
                 await Navigation.PushModalAsync(LoadingPage, true);
 
-              
 
-                TaxisProp item = new TaxisProp
+
+                Creds item = new Creds
                 {
                     name = Name.Text,
-                    phone = int.Parse(Phone.Text),
+                    phone = Phone.Text,
                     //pos = FamName.Text,
-                    pass = Password.Text
+                    pass = Password.Text,
+                    type = ClienType.Client,
                 };
 
                 var json = JsonConvert.SerializeObject(item);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                client.DefaultRequestHeaders.Add("REQ_TYPE", "SIGN_UP");
-                client.DefaultRequestHeaders.Add("REQ_USR", GetUSR());
+                //client.DefaultRequestHeaders.Add("REQ_TYPE", "SIGN_UP");
+                //client.DefaultRequestHeaders.Add("REQ_USR", GetUSR());
 
                 try
                 {
-                    HttpResponseMessage response = await client.PostAsync(uri, content);
+                    string response = await Utility.SignUp(uri.ToString(), item);
 
-                    if (response.Content.ReadAsStringAsync().Result == "USER_ADDED" || response.Content.ReadAsStringAsync().Result == "LOGIN_S")
+                    if (response == "SIGNED_UP")
                     {
-                        Preferences.Set("L", "T");
+                        //Preferences.Set("L", "T");
 
                         // save entry as it's correct
                         Preferences.Set("NAME", Name.Text);
                         Preferences.Set("NUMBER", Phone.Text);
                         Preferences.Set("PASS", Password.Text);
+
+                        Creds creds = new Creds
+                        {
+                            phone = Phone.Text,
+                            pass = Password.Text
+                        };
+
+                        string uri = await Utility.GetUri();
+                        string res = await Utility.LoginReq(uri, creds, "0");
+
 
                         while (this.Navigation.ModalStack.Count > 0)
                         {
@@ -102,21 +115,44 @@ namespace pikappDes
                         }
                         LogInButt.IsEnabled = false;
 
-                        NavigationPage master = new NavigationPage(new NewMainMaster());
-
-
-                        Application.Current.MainPage = master;
-                    }
-                    else if(response.Content.ReadAsStringAsync().Result == "wrong password")
-                    {
-                        while (this.Navigation.ModalStack.Count > 0)
+                        if (res != null && res != string.Empty)
                         {
-                            await this.Navigation.PopModalAsync();
+                            Creds resCreds = JsonConvert.DeserializeObject<Creds>(res);
+
+
+                            Preferences.Set("UID", resCreds.UID);
+                            Preferences.Set("SID", resCreds.SID);
+                            //usrname = Preferences.Get("NAME", "No Val Error");
+                            //number = Preferences.Get("NUMBER", "No Val Error");
+
+                           
+
+                            Preferences.Set("T", resCreds.type.ToString());
+                            Preferences.Set("L", true);
+
+
+                            NavigationPage master = new NavigationPage(new NewMainMaster());
+
+
+                            Application.Current.MainPage = master;
+
+                        }
+                        else
+                        {
+                            await DisplayAlert("ERROR", "LOGIN FAILED ..SIGN UP ?", "Ok");
                         }
 
-                        await DisplayAlert("ERROR", "Wrong password", "Ok");
-                        
                     }
+                    //else if(response == "wrong password")
+                    //{
+                    //    while (this.Navigation.ModalStack.Count > 0)
+                    //    {
+                    //        await this.Navigation.PopModalAsync();
+                    //    }
+
+                    //    await DisplayAlert("ERROR", "Wrong password", "Ok");
+                        
+                    //}
                     else
                     {
                         while (this.Navigation.ModalStack.Count > 0)
@@ -141,17 +177,17 @@ namespace pikappDes
                     //THIIS IS THE ORGINAL WORK
                     //await DisplayAlert("ERROR", response.Content.ReadAsStringAsync().Result, "OK");
 
-                    NavigationPage master = new NavigationPage(new NewMainMaster());
+                   // NavigationPage master = new NavigationPage(new NewMainMaster());
 
 
                     //Application.Current.MainPage = master;
-                    client.CancelPendingRequests();
+                    //client.CancelPendingRequests();
 
                 }
 
 
 
-                client.DefaultRequestHeaders.Clear();
+                //client.DefaultRequestHeaders.Clear();
 
 
             }
@@ -161,9 +197,13 @@ namespace pikappDes
 
         }
 
-        public string GetUSR()
-        {
-            return Preferences.Get("USR", "C");
-        }
+        //public ClienType GetUSR()
+        //{
+        //    if (Preferences.Get("T", "Client") == "Client")
+        //        return ClienType.Client;
+        //    else
+        //        return ClienType.Taxi;
+
+        //}
     }
 }

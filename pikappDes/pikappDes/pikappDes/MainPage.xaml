@@ -20,7 +20,7 @@
             <Label Text="PICKAPP" FontAttributes="Bold" FontSize="Large" TextColor="black" HorizontalOptions="Center"></Label>
         </Frame>
 
-        <Button Margin="10,10,10,5" CornerRadius="50" VerticalOptions="End" Text="Login" TextColor="black" FontSize="Medium" BackgroundColor="#E3BD24" Clicked="Button_Clicked" WidthRequest="200">
+        <Button Margin="10,10,10,5" CornerRadius="50" VerticalOptions="End" Text="Login" TextColor="black" FontSize="Medium" BackgroundColor="#E3BD24" Clicked="Login_Clicked" WidthRequest="200">
             
         </Button>
         <Button x:Name="ContactButton" Margin="10,0,10,20" CornerRadius="50" VerticalOptions="End" Text="Contact Us" TextColor="white" FontSize="Medium" BackgroundColor="#273251" Clicked="ContactButton_Clicked">

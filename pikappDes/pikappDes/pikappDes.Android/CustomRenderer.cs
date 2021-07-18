@@ -58,7 +58,7 @@ namespace pikappDes.Droid
             //AlertDialog alert = dialog.Create();
             //alert.SetTitle(customPin.Phone.ToString());
 
-            Clipboard.SetTextAsync(customPin.Phone.ToString()); //  ========================================= COPY PHONE TO CLIPBOARD
+            Clipboard.SetTextAsync(customPin.phone); //  ========================================= COPY PHONE TO CLIPBOARD
             //alert.Show();
 
 
@@ -133,11 +133,11 @@ namespace pikappDes.Droid
                 if (infoTitle != null)
                 {
                     //infoTitle.Text = customPin.Phone.ToString();
-                    infoTitle.Text = "Call: ";
+                    infoTitle.Text = "Ping : ";
                 }
                 if (infoSubtitle != null)
                 {
-                    infoSubtitle.Text = customPin.Phone.ToString();
+                    infoSubtitle.Text = customPin.phone;
                 }
 
                 return view;

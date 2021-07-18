@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             BackgroundImageSource="background2.png"
+             x:Class="pikappDes.Login">
+    <ContentPage.Content>
+        <StackLayout>
+            <Frame Padding="8" VerticalOptions="CenterAndExpand" HorizontalOptions="Center" Margin="30" BackgroundColor="transparent">
+                <StackLayout >
+                    <Grid >
+                        <!--<Image Source="backgroundblur_notes2.png" Aspect="Fill" VerticalOptions="Fill">
+
+                        </Image>-->
+                        <StackLayout>
+                            <StackLayout>
+                                <Frame HorizontalOptions="CenterAndExpand" Padding="0" HeightRequest="100" WidthRequest="100" CornerRadius="50" BackgroundColor="Black" Opacity="0.7">
+                                    <Image WidthRequest="90" HeightRequest="90" Source="logo1.png" Aspect="AspectFit" VerticalOptions="Center">
+
+                                    </Image>
+                                </Frame>
+
+                            </StackLayout>
+                          
+                            <!--<Frame HeightRequest="40" CornerRadius="20" Margin="5" Padding="5" VerticalOptions="Start" Opacity="0.8">
+                                <Entry x:Name="FamName" Placeholder="Prenom" VerticalOptions="Start"  HorizontalTextAlignment="Center"></Entry>
+                            </Frame>-->
+
+                            <Frame HeightRequest="40" CornerRadius="20" Margin="5" Padding="5" VerticalOptions="Start" Opacity="0.8">
+                                <Entry x:Name="Phone" Placeholder="Num telephone" Keyboard="Numeric" VerticalOptions="Start" MaxLength="8"  HorizontalTextAlignment="Center"></Entry>
+                            </Frame>
+
+                            <Frame HeightRequest="40" CornerRadius="20" Margin="5" Padding="5" VerticalOptions="Start" Opacity="0.8">
+                                <Entry x:Name="Password" IsPassword="True" Placeholder="mot de passe" VerticalOptions="Start" HorizontalTextAlignment="Center"></Entry>
+                            </Frame>
+
+                            <Button x:Name="LogInButt" HeightRequest="45" WidthRequest="220" CornerRadius="20" BackgroundColor="#FEDFB6" Margin="6" Text="Login " VerticalOptions="Center" HorizontalOptions="Center" Clicked="LogInButt_Clicked">
+                                
+                            </Button>
+                            <Button x:Name="SignupButt" HeightRequest="45" WidthRequest="220" CornerRadius="20" BackgroundColor="#FEDFB6" Margin="6" Text="Sign Up " VerticalOptions="Center" HorizontalOptions="Center" Clicked="Signup_clicked">
+                                
+                            </Button>
+
+                        </StackLayout>
+
+
+
+
+
+
+                    </Grid>
+                </StackLayout>
+            </Frame>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

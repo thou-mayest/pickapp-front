@@ -51,7 +51,12 @@ namespace pikappDes
                 return;
             if(item.Id == 5)
             {
-                Preferences.Set("L", "F");
+                Preferences.Set("L", false);
+                Preferences.Set("UID", "");
+                Preferences.Set("SID", "");
+                Preferences.Set("NAME", "");
+                Preferences.Set("NUMBER", "");
+
                 IsPresented = false;
 
                 System.Diagnostics.Process.GetCurrentProcess().Kill();

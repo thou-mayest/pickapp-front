@@ -10,7 +10,9 @@ using Newtonsoft.Json;
 using Xamarin.Forms.Maps;
 using System.Net.Http;
 using Xamarin.Essentials;
-using pikappDes;
+using pikappDes.Utils;
+using pikappDes.Utils.modals;
+
 
 
 namespace pikappDes
@@ -19,13 +21,18 @@ namespace pikappDes
     public partial class NewMainMasterDetail : ContentPage
     {
 
-
+        Creds Mycreds = new Creds();
         /// <summary>
         ///                 THIS IS MAIN MAP LOGIC
         /// </summary>
         public NewMainMasterDetail()
         {
             InitializeComponent();
+            Enum.TryParse(Preferences.Get("T", "Client"), out ClienType type);
+            Mycreds.UID = Preferences.Get("UID", "");
+            Mycreds.SID = Preferences.Get("SID", "");
+            Mycreds.type = type;
+           
             updateMap();
         }
 
@@ -33,7 +40,7 @@ namespace pikappDes
 
         
         static Uri Uri;
-        List<TaxisProp> taxis = new List<TaxisProp>();
+        List<UserProp> UserList = new List<UserProp>();
 
         public async Task GetUriAsync()
         {
@@ -57,7 +64,7 @@ namespace pikappDes
             {
                 LocatorStatus = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
                 await Task.Delay(500);
-                updateMap();
+                await updateMap();
             }
             else
             {
@@ -83,7 +90,7 @@ namespace pikappDes
                 {
                     await DisplayAlert("error", "balizz open geolocation ", "OK");
                 }
-                updateMap();
+                await updateMap();
             }
 
         }
@@ -108,35 +115,28 @@ namespace pikappDes
             //string uri = "https://00c83087.ngrok.io/api/values";
             if (Uri != null)
             {
-                    client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Add("USR", Preferences.Get("USR","C"));
+                    //client.DefaultRequestHeaders.Clear();
+                //client.DefaultRequestHeaders.Add("USR", Preferences.Get("USR","C"));
                 try
                 {
-                    var respond = await client.GetAsync(Uri.ToString());
+                    UserList.Clear();
 
-                    if (respond.IsSuccessStatusCode)
+
+                    string res = await Utility.GetList(Uri.ToString(), Mycreds);
+
+                    if (res != "ERROR")
                     {
+                        UserList = JsonConvert.DeserializeObject<List<UserProp>>(res);
 
-                        taxis.Clear();
-                        var content = await respond.Content.ReadAsStringAsync();
 
-                        taxis = JsonConvert.DeserializeObject<List<TaxisProp>>(content);
-
-                        
                         MyMap.Pins.Clear();
-
-                        
-                        if (Preferences.Get("USR", "C") == "C")
+                        if (Preferences.Get("T", "") == "Client")
                             PopulateCustomTaxi(); //=========================== populate map with pins GENERIC
                         else
                             PopulateCustomClient(); //============== populate map with pins OTHER
 
-
-
-
-
-
                     }
+
                 }
                 catch (Exception)
                 {
@@ -158,21 +158,23 @@ namespace pikappDes
 
         public void PopulateCustomTaxi()
         {
-            foreach (TaxisProp item in taxis)
+            foreach (UserProp item in UserList)
             {
                 CustomPins pin = new CustomPins
                 {
-                    Name = item.name,
+                    name = item.name,
                     Label = item.name,
                     Address = item.pos,
 
                     Type = PinType.Generic,
 
-                    Phone = item.phone,
+                    phone = item.phone,
                     Position = new Position(Convert.ToDouble(item.pos.Split('/')[0]), Convert.ToDouble(item.pos.Split('/')[1]))
 
                 };
 
+
+               
                 //await DisplayAlert(pin.Name, pin.Pos, "OK");
 
                 pin.InfoWindowClicked += pin_clicked;
@@ -189,22 +191,23 @@ namespace pikappDes
         public void PopulateCustomClient()
         {
 
-            foreach (TaxisProp item in taxis)
+            foreach (UserProp item in UserList)
             {
                 CustomPins pin = new CustomPins
                 {
-                    Name = item.name,
+                    name = item.name,
                     Label = item.name,
                     Address = item.pos,
 
                     Type = PinType.Place,
 
-                    Phone = item.phone,
+                    phone = item.phone,
                     Position = new Position(Convert.ToDouble(item.pos.Split('/')[0].Replace('.',',')), Convert.ToDouble(item.pos.Split('/')[1].Replace('.',','))) //change according to culture . Or ,
 
                 };
 
-                
+
+               
 
                 pin.InfoWindowClicked += pin_clicked;
 
@@ -221,32 +224,28 @@ namespace pikappDes
         {
             var posGPS = await Utility.GetPos();
 
-            TaxisProp UpdateItem = new TaxisProp
+            Enum.TryParse(Preferences.Get("T", "Client"), out ClienType type);
+            
+            UserProp UpdateItem = new UserProp
             {
-                name = Preferences.Get("NAME", ""),
-                phone = int.Parse(Preferences.Get("NUMBER", "")),
+                UID = Mycreds.UID,
                 pos = posGPS.Latitude.ToString() + "/" + posGPS.Longitude.ToString(),
-                pass = Preferences.Get("PASS", ""),
-                free = Preferences.Get("FREE", true)
+                free = Preferences.Get("FREE", true),
+                type = type,
+
             };
 
-            var json = JsonConvert.SerializeObject(UpdateItem);
-            var UpdateContent = new StringContent(json, Encoding.UTF8, "application/json");
-            // var content = new StringContent(json, Encoding.UTF8, "application/json");
-            client.DefaultRequestHeaders.Clear();
-            client.DefaultRequestHeaders.Add("REQ_TYPE", "UPDATE_pos");
-            client.DefaultRequestHeaders.Add("REQ_USR", Preferences.Get("USR", "C"));
-
             
-
-            try
-            {
-                var response = client.PostAsync(Uri, UpdateContent);
-            }
-            catch (Exception)
+            string res = await Utility.UpdatePos(Uri.ToString(), UpdateItem);
+            if (res == "ERROR")
             {
                 await GetUriAsync();
             }
+            if(res == "LOGIN_ERROR")
+            {
+                await DisplayAlert("Error", "login expired plz disconnect and reconnect", "Cancel");
+            }
+
 
         }
 
@@ -257,7 +256,7 @@ namespace pikappDes
             //DisplayAlert("Number Copied to clipboard", selected_pin.Phone.ToString(), "OK");
 
             //PhoneDialer.Open(selected_pin.Phone.ToString());
-            Launcher.OpenAsync(new Uri("tel:"+selected_pin.Phone.ToString()));
+            Launcher.OpenAsync(new Uri("tel:"+selected_pin.phone.ToString()));
         }
     }
 }
