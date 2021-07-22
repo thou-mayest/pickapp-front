@@ -10,15 +10,36 @@ namespace pikappDes.Utils
 {
     public class ChatHub : IChat
     {
-        private readonly HubConnection ConnectionHub;
+        private HubConnection ConnectionHub;
 
+        public string uri;
 
         public ChatHub()
         {
+            BuildConnection();
+        }
+        public void OnMsgRec(Action action)
+        {
+            ConnectionHub.On("Msg", action);
+        }
+        public void OnPing(Action action)
+        {
+            ConnectionHub.On("Ping", action);
+        }
+        public async void BuildConnection()
+        {
+            uri = await Utility.GetUri();
             ConnectionHub = new HubConnectionBuilder()
-                .WithUrl("https://669292a580d4.ngrok.io" + "/ChatHub")
+                .WithUrl(uri + "/ChatHub")
                 .Build();
         }
+
+        public void OnError(Action action)
+        {
+            ConnectionHub.On("OnError", action);
+        }
+
+
         public async Task Connect()
         {
             await ConnectionHub.StartAsync();
@@ -35,6 +56,13 @@ namespace pikappDes.Utils
                 return true;
             }
         }
+
+        public async Task SendPing(string DestUID,Creds creds)
+        {
+            await ConnectionHub.InvokeAsync("SendPing", DestUID, creds);
+        }
+
+
 
         public async Task Register(Creds creds)
         {

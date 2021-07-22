@@ -7,10 +7,21 @@
              Title="Messages"
              x:Class="pikappDes.MessagesPage">
     <ContentPage.Content>
-        <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
-            <Label  Text="Welcome to messages page ...sorry under constructions! :/ "
+        <StackLayout BackgroundColor="Black" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <Label TextColor="White" Text="Welcome to messages page ...sorry under constructions! :/ "
                 HorizontalTextAlignment="Center" 
                 VerticalTextAlignment="Center" />
+            <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Orientation="Horizontal" Padding="2" Margin="0">
+
+                <Frame HeightRequest="40" CornerRadius="20" Margin="5" Padding="5" VerticalOptions="EndAndExpand" Opacity="0.8" HorizontalOptions="FillAndExpand">
+                    <Entry x:Name="Msg" Placeholder="..." Keyboard="Chat" VerticalOptions="Start"  HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand"></Entry>
+
+                </Frame>
+                <Button Margin="5" Padding="1" VerticalOptions="EndAndExpand" Text="send" HorizontalOptions="Fill" Clicked="Send_Msg"></Button>
+            </StackLayout>
+            
+
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

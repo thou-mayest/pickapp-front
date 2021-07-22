@@ -9,8 +9,12 @@ namespace pikappDes.Utils
     public interface IChat
     {
         Task Connect();
+        void OnError(Action action);
         bool IsConnected();
         Task Register(Creds creds);
+        Task SendPing(string uid, Creds creds);
+        void OnPing(Action action);
+        void OnMsgRec(Action action);
         Task Disconnect();
     }
 }

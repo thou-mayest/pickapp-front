@@ -32,82 +32,81 @@ namespace pikappDes
         }
 
 
-        private IChat _Chathub;
         public async void Login_Clicked(object sender, EventArgs e)
         {
 
-            _Chathub = DependencyService.Get<IChat>();
+            //_Chathub = DependencyService.Get<IChat>();
 
-            if(!_Chathub.IsConnected())
+            //if(!_Chathub.IsConnected())
+            //{
+            //    await _Chathub.Connect();
+            //}
+
+
+
+            //Creds auth = new Creds
+            //{
+            //    UID = "UID AUTH FOR CHAT:  " + DateTime.Now,
+            //};
+
+            //await _Chathub.Register(auth);
+
+
+            //await DisplayAlert("titel", "message test", "cancel");
+            if (Preferences.Get("L", false))
             {
-                await _Chathub.Connect();
+                NavigationPage master = new NavigationPage(new NewMainMaster());
+
+
+                Application.Current.MainPage = master;
+
+            }
+            else
+            {
+                var LoadingPage = new LoadingPage();
+                await Navigation.PushModalAsync(LoadingPage, true);
+
+
+
+                Enum.TryParse(Preferences.Get("T", "Client"), out ClienType type);
+
+                Creds creds = new Creds
+                {
+                    UID = Preferences.Get("UID", ""),
+                    SID = Preferences.Get("SID", ""),
+                    type = type
+                };
+
+
+
+                string uri = await Utility.GetUri();
+                string res = await Utility.LoginReq(uri, creds, "1");
+
+                while (this.Navigation.ModalStack.Count > 0)
+                {
+                    await this.Navigation.PopModalAsync();
+                }
+
+                if (res == "ERROR")
+                {
+
+                    await DisplayAlert("Error", "NETWORK ERROR", "Cancel");
+                }
+                else if (res != null && res != string.Empty && res != "false")
+                {
+
+                    NavigationPage master = new NavigationPage(new NewMainMaster());
+                    Application.Current.MainPage = master;
+                }
+                else
+                {
+                    NavigationPage master = new NavigationPage(new Login());
+                    Application.Current.MainPage = master;
+
+                }
             }
 
-           
 
-            Creds auth = new Creds
-            {
-                UID = "UID AUTH FOR CHAT:  " + DateTime.Now,
-            };
-
-            await _Chathub.Register(auth);
-
-
-            await DisplayAlert("titel", "message test", "cancel");
-            //if (Preferences.Get("L", false))
-            //{
-            //        NavigationPage master = new NavigationPage(new NewMainMaster());
-
-
-            //        Application.Current.MainPage = master;
-
-            //}
-            //else
-            //{
-            //    var LoadingPage = new LoadingPage();
-            //    await Navigation.PushModalAsync(LoadingPage, true);
-
-
-
-            //    Enum.TryParse(Preferences.Get("T", "Client"), out ClienType type);
-
-            //    Creds creds = new Creds
-            //    {
-            //        UID = Preferences.Get("UID", ""),
-            //        SID = Preferences.Get("SID", ""),
-            //        type = type
-            //    };
-
-
-
-            //    string uri = await Utility.GetUri();
-            //    string res = await Utility.LoginReq(uri, creds, "1");
-
-            //    while (this.Navigation.ModalStack.Count > 0)
-            //    {
-            //        await this.Navigation.PopModalAsync();
-            //    }
-
-            //    if (res == "ERROR")
-            //    {
-
-            //        await DisplayAlert("Error", "NETWORK ERROR", "Cancel");
-            //    }
-            //    else if (res != null && res != string.Empty && res != "false")
-            //    {
-
-            //        NavigationPage master = new NavigationPage(new NewMainMaster());
-            //        Application.Current.MainPage = master;
-            //    }
-            //    else
-            //    {
-            //        NavigationPage master = new NavigationPage(new Login());
-            //        Application.Current.MainPage = master;
-
-            //    }
-            //}
-
-           
 
             /////////////////////////////////////////////////////////:::
             ///                             OLD

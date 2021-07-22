@@ -7,6 +7,7 @@ using Plugin.Geolocator;
 using pikappDes.Utils.modals;
 using Newtonsoft.Json;
 using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace pikappDes.Utils
 {
@@ -30,6 +31,8 @@ namespace pikappDes.Utils
             }
 
         }
+
+        
         public static async Task<String> GetUri()
         {
             await GetLnk();

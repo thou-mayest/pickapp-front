@@ -95,8 +95,6 @@ namespace pikappDes
 
         }
 
-        Random rn = new Random();
-
          
         private async Task UpdateLists()
         {
@@ -135,6 +133,10 @@ namespace pikappDes
                         else
                             PopulateCustomClient(); //============== populate map with pins OTHER
 
+                    }
+                    if(res == "ERROR")
+                    {
+                        await DisplayAlert("ERROR", "Connection failed", "Cancel");
                     }
 
                 }
