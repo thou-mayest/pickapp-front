@@ -37,8 +37,17 @@ namespace pikappDes
 
         private async void Send_Msg(object sender, EventArgs e)
         {
+            bool connected;
+            try
+            {
+                connected = _chat.IsConnected();
+            }
+            catch (Exception)
+            {
 
-            if (!_chat.IsConnected())
+                connected = false;
+            }
+            if (!connected)
             {
                 try
                 {

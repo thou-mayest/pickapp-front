@@ -34,7 +34,7 @@ namespace pikappDes
                 pass = Password.Text
             };
 
-            string uri = await Utility.GetUri();
+            string uri = await Utility.GetUri(false);
             string res = await Utility.LoginReq(uri, creds, "0");
 
             while (this.Navigation.ModalStack.Count > 0)

@@ -15,6 +15,7 @@ namespace pikappDes.Utils.modals
         public bool free { get; set; }
 
         public string UID { get; set; }
+        public float Rating { get; set; }
         public ClienType type { get; set; }
     }
 }

@@ -105,7 +105,16 @@ namespace pikappDes
         }
         private void msg_button_Clicked(object sender, EventArgs e)
         {
-            Detail = new NavigationPage(new MessagesPage());
+            //Detail = new NavigationPage(new MessagesPage());
+
+            NavigationPage navpage;
+
+            pages.TryGetValue(1, out navpage);
+            navpage.Title = "Messages";
+
+
+            Detail = navpage;
+            Detail.Title = "Messages";
         }
 
         public bool free;

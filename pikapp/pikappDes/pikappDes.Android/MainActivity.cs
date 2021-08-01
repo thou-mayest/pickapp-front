@@ -1,5 +1,5 @@
 ﻿using System;
-
+using Rg.Plugins.Popup;
 using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
@@ -16,6 +16,8 @@ namespace pikappDes.Droid
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
+
+            Rg.Plugins.Popup.Popup.Init(this) ;
 
             base.OnCreate(savedInstanceState);
 

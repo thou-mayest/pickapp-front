@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using Xamarin.Essentials;
 using pikappDes.Utils;
 using pikappDes.Utils.modals;
+using Rg.Plugins.Popup.Extensions;
 
 namespace pikappDes
 {
@@ -28,31 +29,16 @@ namespace pikappDes
         
         public async Task GetUri()
         {
-            uri = await Utility.GetUri();
+            uri = await Utility.GetUri(true);
         }
 
 
         public async void Login_Clicked(object sender, EventArgs e)
         {
 
-            //_Chathub = DependencyService.Get<IChat>();
-
-            //if(!_Chathub.IsConnected())
-            //{
-            //    await _Chathub.Connect();
-            //}
 
 
 
-            //Creds auth = new Creds
-            //{
-            //    UID = "UID AUTH FOR CHAT:  " + DateTime.Now,
-            //};
-
-            //await _Chathub.Register(auth);
-
-
-            //await DisplayAlert("titel", "message test", "cancel");
             if (Preferences.Get("L", false))
             {
                 NavigationPage master = new NavigationPage(new NewMainMaster());
@@ -79,7 +65,7 @@ namespace pikappDes
 
 
 
-                string uri = await Utility.GetUri();
+                //string uri = await Utility.GetUri(true);
                 string res = await Utility.LoginReq(uri, creds, "1");
 
                 while (this.Navigation.ModalStack.Count > 0)

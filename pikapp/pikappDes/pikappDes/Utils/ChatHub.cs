@@ -18,25 +18,26 @@ namespace pikappDes.Utils
         {
             BuildConnection();
         }
-        public void OnMsgRec(Action action)
-        {
-            ConnectionHub.On("Msg", action);
-        }
-        public void OnPing(Action action)
-        {
-            ConnectionHub.On("Ping", action);
-        }
         public async void BuildConnection()
         {
-            uri = await Utility.GetUri();
+            uri = await Utility.GetUri(false);
             ConnectionHub = new HubConnectionBuilder()
                 .WithUrl(uri + "/ChatHub")
                 .Build();
         }
 
-        public void OnError(Action action)
+        public void OnMsgRec(Action action)
         {
-            ConnectionHub.On("OnError", action);
+            ConnectionHub.On("Msg", action);
+        }
+        public void OnPing(Action<string,int> action)
+        {
+            ConnectionHub.On<string,int>("OnPing", action);
+        }
+       
+        public void OnError(Action<string> action)
+        {
+            ConnectionHub.On<string>("OnError", action);
         }
 
 
@@ -57,12 +58,21 @@ namespace pikappDes.Utils
             }
         }
 
-        public async Task SendPing(string DestUID,Creds creds)
+        public async Task SendPing(string DestUID,Creds creds,int secret)
         {
-            await ConnectionHub.InvokeAsync("SendPing", DestUID, creds);
+            await ConnectionHub.InvokeAsync("SendPing", DestUID, creds,secret);
         }
 
+        public async Task AcceptPing(int secret,string DestUID,Creds creds)
+        {
+            await ConnectionHub.InvokeAsync("AcceptPing", secret,DestUID,creds);
+        }
 
+        public void OnAccepted(Action<string,string,int> action)
+        {
+            ConnectionHub.On<string,string,int>("OnAccepted", action);
+            //OnAccepted(string RID,int secret);
+        }
 
         public async Task Register(Creds creds)
         {
@@ -72,6 +82,26 @@ namespace pikappDes.Utils
         public async Task Disconnect()
         {
             await ConnectionHub.StopAsync();
+        }
+
+        Dictionary<string, int> pending = new Dictionary<string, int>();
+        public void AddPendingReq(int secret , string uid)
+        {
+            if(!pending.TryGetValue(uid, out int StoredSecret))
+            {
+                pending.Add(uid, secret);
+            }
+
+            
+        }
+
+        public bool PendingSecret(string uid, int secret)
+        {
+            //true if pending UID = giving secret
+
+            pending.TryGetValue(uid, out int StoredSecret);
+
+            return (StoredSecret == secret) ? true : false;
         }
     }
 }

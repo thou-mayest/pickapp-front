@@ -37,7 +37,7 @@ namespace pikappDes
             {
                 //uri = new Uri(await client.GetStringAsync(furi) + "/api/values"); 
 
-                uri = new Uri(await Utility.GetUri());
+                uri = new Uri(await Utility.GetUri(true));
                 
                 //uri = await Utility.GetUri();
                 if(uri != null)
@@ -105,7 +105,7 @@ namespace pikappDes
                             pass = Password.Text
                         };
 
-                        string uri = await Utility.GetUri();
+                        string uri = await Utility.GetUri(false);
                         string res = await Utility.LoginReq(uri, creds, "0");
 
 

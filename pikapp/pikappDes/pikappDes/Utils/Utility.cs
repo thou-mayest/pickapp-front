@@ -14,14 +14,28 @@ namespace pikappDes.Utils
     static class Utility
     {
         static Uri furi = new Uri("https://www.dropbox.com/s/415evpihw5pduxp/lnk.txt?dl=1");
+        
+        
         static HttpClient client = new HttpClient();
         static string uri;
         static bool err;
+
+
         private async static Task GetLnk()
         {
+
+
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.UseProxy = false;
+            handler.Proxy = null;
+
+            HttpClient urigetter = new HttpClient(handler);
             try
             {
-                uri = new Uri(await client.GetStringAsync(furi) + "/api/values").ToString();
+                //uri = new Uri(await urigetter.GetStringAsync(furi) + "/api/values").ToString();
+                uri = "https://e2e87947a062.ngrok.io/api/values";
+                
+
                 err = false;
             }
             catch (Exception)
@@ -33,9 +47,13 @@ namespace pikappDes.Utils
         }
 
         
-        public static async Task<String> GetUri()
+        public static async Task<string> GetUri(bool reload)
         {
-            await GetLnk();
+            if (reload || (uri != null || uri != string.Empty))
+            {
+                await GetLnk();
+            }
+            
             if (!err)
                 return uri;
             else
@@ -116,7 +134,7 @@ namespace pikappDes.Utils
             var settings = new JsonSerializerSettings();
             settings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
 
-
+            Console.WriteLine("tet"); // +++++++++++++++ TESTING TIME
             var json = JsonConvert.SerializeObject(item,settings);
             var itemcontent = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -179,5 +197,7 @@ namespace pikappDes.Utils
             return await locator.GetPositionAsync(TimeSpan.FromSeconds(5));
 
         }
+
+        
     }
 }

@@ -12,7 +12,7 @@ using System.Net.Http;
 using Xamarin.Essentials;
 using pikappDes.Utils;
 using pikappDes.Utils.modals;
-
+using Rg.Plugins.Popup.Extensions;
 
 
 namespace pikappDes
@@ -24,16 +24,56 @@ namespace pikappDes
         Creds Mycreds = new Creds();
         /// <summary>
         ///                 THIS IS MAIN MAP LOGIC
+        ///                 (put this in a singleton ) <===================
         /// </summary>
+        /// 
+
+        IChat _chat;
         public NewMainMasterDetail()
         {
+
+            _chat = DependencyService.Get<IChat>();
+
             InitializeComponent();
             Enum.TryParse(Preferences.Get("T", "Client"), out ClienType type);
             Mycreds.UID = Preferences.Get("UID", "");
             Mycreds.SID = Preferences.Get("SID", "");
             Mycreds.type = type;
+
            
+            _chat.OnError(OnChatError);
+            _chat.OnPing(OnPing);
+            _chat.OnAccepted(OnAccepted);
+            TryChatConnect();
             updateMap();
+        }
+
+        public void TryChatConnect()
+        {
+            bool connected;
+            try
+            {
+                connected = _chat.IsConnected();
+            }
+            catch (Exception)
+            {
+
+                connected = false;
+            }
+            if (!connected)
+            {
+                try
+                {
+                    _chat.Connect();
+                    _chat.Register(Mycreds);
+                }
+                catch (Exception)
+                {
+                    DisplayAlert("Error", "Chat service Connection failed", "Cancel");
+                }
+
+
+            }
         }
 
         static HttpClient client = new HttpClient();
@@ -42,9 +82,10 @@ namespace pikappDes
         static Uri Uri;
         List<UserProp> UserList = new List<UserProp>();
 
-        public async Task GetUriAsync()
+        public async Task GetUriAsync(bool reload)
         {
-            Uri = new Uri(await Utility.GetUri());
+            
+            Uri = new Uri(await Utility.GetUri(reload));
         }
 
         bool firstRun = true;
@@ -70,27 +111,32 @@ namespace pikappDes
             {
                 try
                 {
-                    await GetUriAsync();
-
+                    await GetUriAsync(false);
+                   
                     var posGPS = await Utility.GetPos();
+                   
+                    // get position and update URI 
 
-                    // get position and update URI (it's public var) 
-                    
 
                     MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(posGPS.Latitude, posGPS.Longitude), Distance.FromKilometers(0.3)));
-
+                   
                     MyMap.IsVisible = true;
                     MyMap.IsShowingUser = true;
 
                     MyMap.CustomPins = new List<CustomPins>();
-
-                    await UpdateLists();
+                    
+                    UpdateLists();
+                   
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    await DisplayAlert("error", "balizz open geolocation ", "OK");
+                    await Task.Delay(2000);
+                    //await DisplayAlert("error", "balizz open geolocation ", "OK");
+                    await DisplayAlert("error", ex.Message, "OK");
+                    await updateMap();
                 }
-                await updateMap();
+
+
             }
 
         }
@@ -120,7 +166,7 @@ namespace pikappDes
                     UserList.Clear();
 
 
-                    string res = await Utility.GetList(Uri.ToString(), Mycreds);
+                    string res = await Utility.GetList(Uri.ToString(), Mycreds); // PERFORMANCE HIT
 
                     if (res != "ERROR")
                     {
@@ -142,7 +188,7 @@ namespace pikappDes
                 }
                 catch (Exception)
                 {
-                    await GetUriAsync();
+                    await GetUriAsync(true);
 
                 }
 
@@ -168,6 +214,7 @@ namespace pikappDes
                     Label = item.name,
                     Address = item.pos,
 
+                    UID = item.UID,
                     Type = PinType.Generic,
 
                     phone = item.phone,
@@ -200,7 +247,7 @@ namespace pikappDes
                     name = item.name,
                     Label = item.name,
                     Address = item.pos,
-
+                    UID = item.UID,
                     Type = PinType.Place,
 
                     phone = item.phone,
@@ -230,6 +277,7 @@ namespace pikappDes
             
             UserProp UpdateItem = new UserProp
             {
+                name = Preferences.Get("NAME", "No Val Error"),
                 UID = Mycreds.UID,
                 pos = posGPS.Latitude.ToString() + "/" + posGPS.Longitude.ToString(),
                 free = Preferences.Get("FREE", true),
@@ -240,7 +288,7 @@ namespace pikappDes
             string res = await Utility.UpdatePos(Uri.ToString(), UpdateItem);
             if (res == "ERROR")
             {
-                await GetUriAsync();
+                await GetUriAsync(true);
             }
             if(res == "LOGIN_ERROR")
             {
@@ -248,14 +296,63 @@ namespace pikappDes
             }
         }
 
+        Random rn = new Random();
+        
         private void pin_clicked(object sender, EventArgs e)
         {
             CustomPins selected_pin = (CustomPins)sender;
 
-            //DisplayAlert("Number Copied to clipboard", selected_pin.Phone.ToString(), "OK");
+            TryChatConnect();
+
+            int secret = rn.Next(1, 9999);
+
+            _chat.AddPendingReq(secret, selected_pin.UID);
+
+            try
+            {
+                
+                _chat.SendPing(selected_pin.UID, Mycreds,secret);
+                DisplayAlert("Send", "Ping sent: "+ selected_pin.UID, "Ok");
+            }
+            catch (Exception)
+            {
+                TryChatConnect();
+            }
+
+            
 
             //PhoneDialer.Open(selected_pin.Phone.ToString());
-            Launcher.OpenAsync(new Uri("tel:"+selected_pin.phone.ToString()));
+            //Launcher.OpenAsync(new Uri("tel:"+selected_pin.phone.ToString()));
         }
+
+        private void OnChatError(string msg)
+        {
+            DisplayAlert("Error", msg, "Cancel");
+        }
+
+        private void OnPing(string uid,int secret)
+        {
+            //DisplayAlert("Ping", fromserv, "Ok");
+
+            var popup = new PingPage(uid,secret,Mycreds);
+
+            App.Current.MainPage.Navigation.PushPopupAsync(popup, true);
+
+        }
+
+        private void OnAccepted(string RID,string uid, int secret)
+        {
+            //if secret existes in dictionnary then call CreateRoom()
+            if (_chat.PendingSecret(uid,secret))
+            {
+                //call createRoom
+            }
+            else
+            {
+                DisplayAlert("ERROR", "SECRET NOT MATCHING", "OK"); //// FOR TEST ONLY /// PROB CHALLENGE??
+            }
+
+        }
+
     }
 }
