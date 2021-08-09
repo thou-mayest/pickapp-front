@@ -87,21 +87,47 @@ namespace pikappDes.Utils
         Dictionary<string, int> pending = new Dictionary<string, int>();
         public void AddPendingReq(int secret , string uid)
         {
-            if(!pending.TryGetValue(uid, out int StoredSecret))
+
+            bool ispending = pending.TryGetValue(uid, out int StoredSecret);
+
+            if (!ispending)
             {
                 pending.Add(uid, secret);
+            }
+            else
+            {
+                pending[uid] = secret;
             }
 
             
         }
 
-        public bool PendingSecret(string uid, int secret)
+        public bool IsPendingSecret(string uid, int secret)
         {
             //true if pending UID = giving secret
 
             pending.TryGetValue(uid, out int StoredSecret);
 
             return (StoredSecret == secret) ? true : false;
+        }
+
+        public async Task CreateRoom(Creds Mycreds,string RID,string UID)
+        {
+            await ConnectionHub.InvokeAsync("CreateRoom",Mycreds,RID,UID);
+        }
+        public void RoomCreated(Action<string> action)
+        {
+            ConnectionHub.On<string>("RoomCreated",action);
+        }
+
+        public async Task GetMyRooms(Creds MyCreds)
+        {
+            await ConnectionHub.InvokeAsync("GetMyRooms", MyCreds);
+        }
+
+        public void RecMyrooms(Action<string> action)
+        {
+            ConnectionHub.On<string>("RecMyrooms", action);
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Rg.Plugins.Popup;
+using Rg.Plugins.Popup.Extensions;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using pikappDes.Utils;
@@ -109,13 +109,11 @@ namespace pikappDes
         private void Accept_Clicked(object sender, EventArgs e)
         {
             _chat.AcceptPing(SecretInt,profilUID,Mycreds);
-
-            
         }
 
         private void Reject_Clicked(object sender, EventArgs e)
         {
-
+            Navigation.PopPopupAsync();
         }
     }
 }

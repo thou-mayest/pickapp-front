@@ -17,7 +17,11 @@ namespace pikappDes.Utils
         void OnPing(Action<string,int> action);
         Task AcceptPing(int secret,string DestUID,Creds creds);
         void OnAccepted(Action<string,string,int> action);
-        bool PendingSecret(string uid, int secret);
+        bool IsPendingSecret(string uid, int secret);
+        Task CreateRoom(Creds Mycreds, string RID, string UID);
+        void RoomCreated(Action<string> action);
+        Task GetMyRooms(Creds MyCreds);
+        void RecMyrooms(Action<string> action);
         void OnMsgRec(Action action);
         Task Disconnect();
     }

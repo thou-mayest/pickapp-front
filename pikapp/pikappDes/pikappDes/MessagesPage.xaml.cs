@@ -37,43 +37,43 @@ namespace pikappDes
 
         private async void Send_Msg(object sender, EventArgs e)
         {
-            bool connected;
-            try
-            {
-                connected = _chat.IsConnected();
-            }
-            catch (Exception)
-            {
+            //bool connected;
+            //try
+            //{
+            //    connected = _chat.IsConnected();
+            //}
+            //catch (Exception)
+            //{
 
-                connected = false;
-            }
-            if (!connected)
-            {
-                try
-                {
-                    await _chat.Connect();
-                    await _chat.Register(Mycreds);
-                }
-                catch (Exception)
-                {
-                    await DisplayAlert("Error", "Connection failed", "Cancel");
-                }
+            //    connected = false;
+            //}
+            //if (!connected)
+            //{
+            //    try
+            //    {
+            //        await _chat.Connect();
+            //        await _chat.Register(Mycreds);
+            //    }
+            //    catch (Exception)
+            //    {
+            //        await DisplayAlert("Error", "Connection failed", "Cancel");
+            //    }
 
 
-            }
-            try
-            {
-                await _chat.SendPing(Msg.Text, Mycreds);
-            }
-            catch (Exception)
-            {
+            //}
+            //try
+            //{
+            //    await _chat.SendPing(Msg.Text, Mycreds);
+            //}
+            //catch (Exception)
+            //{
 
-                await DisplayAlert("Error", "Connection failed", "Cancel") ;
-            }
+            //    await DisplayAlert("Error", "Connection failed", "Cancel") ;
+            //}
             
         }
 
-        public void DisplayError()
+        public void DisplayError(string msg)
         {
             DisplayAlert("from serv", "ERROR FRROM SERVER", "Cancle");
         }

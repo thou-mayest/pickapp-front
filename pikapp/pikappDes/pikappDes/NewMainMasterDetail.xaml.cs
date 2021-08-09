@@ -40,12 +40,15 @@ namespace pikappDes
             Mycreds.SID = Preferences.Get("SID", "");
             Mycreds.type = type;
 
-           
             _chat.OnError(OnChatError);
             _chat.OnPing(OnPing);
             _chat.OnAccepted(OnAccepted);
+            _chat.RoomCreated(RoomCreate);
             TryChatConnect();
             updateMap();
+            //Task.Run(() => updateMap());
+            //t.Wait();
+
         }
 
         public void TryChatConnect()
@@ -343,14 +346,24 @@ namespace pikappDes
         private void OnAccepted(string RID,string uid, int secret)
         {
             //if secret existes in dictionnary then call CreateRoom()
-            if (_chat.PendingSecret(uid,secret))
+            if (_chat.IsPendingSecret(uid,secret))
             {
-                //call createRoom
+                DisplayAlert("Accepted", uid, "Ok");
+                _chat.CreateRoom(Mycreds,RID,uid);
             }
             else
             {
                 DisplayAlert("ERROR", "SECRET NOT MATCHING", "OK"); //// FOR TEST ONLY /// PROB CHALLENGE??
             }
+
+        }
+
+        private void RoomCreate(string RID)
+        {
+            // msglist += RID
+            // navigation = MsgPage
+
+            DisplayAlert("CREATED", "room: " + RID, "Ok"); // DELETE, THIS FOR TESTING ONLY
 
         }
 

@@ -33,7 +33,7 @@ namespace pikappDes.Utils
             try
             {
                 //uri = new Uri(await urigetter.GetStringAsync(furi) + "/api/values").ToString();
-                uri = "https://e2e87947a062.ngrok.io/api/values";
+                uri = "https://700c78874a07.ngrok.io/api/values";
                 
 
                 err = false;

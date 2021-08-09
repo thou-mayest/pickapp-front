@@ -23,7 +23,7 @@ namespace pikappDes
             MasterPage.MenuListViw.ItemSelected += ListView_ItemSelected;
            
             pages.Add(0, new NavigationPage(new NewMainMasterDetail()));
-            pages.Add(1, new NavigationPage(new MessagesPage()));
+            pages.Add(1, new NavigationPage(new MessagesListPage()));
             pages.Add(2, new NavigationPage(new OptionsPage()));
             pages.Add(3, new NavigationPage(new LoadingPage()));
             pages.Add(4, new NavigationPage(new ProAccPage()));
