@@ -58,8 +58,8 @@ namespace pikappDes
 
                 Creds creds = new Creds
                 {
-                    UID = Preferences.Get("UID", ""),
-                    SID = Preferences.Get("SID", ""),
+                    UID = Preferences.Get("UID", "null"),
+                    SID = Preferences.Get("SID", "null"),
                     type = type
                 };
 
@@ -80,7 +80,6 @@ namespace pikappDes
                 }
                 else if (res != null && res != string.Empty && res != "false")
                 {
-
                     NavigationPage master = new NavigationPage(new NewMainMaster());
                     Application.Current.MainPage = master;
                 }

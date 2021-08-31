@@ -58,7 +58,7 @@ namespace pikappDes.Droid
             //AlertDialog alert = dialog.Create();
             //alert.SetTitle(customPin.Phone.ToString());
 
-            Clipboard.SetTextAsync(customPin.phone); //  ========================================= COPY PHONE TO CLIPBOARD
+            //Clipboard.SetTextAsync(customPin.phone); //  ========================================= COPY PHONE TO CLIPBOARD
             //alert.Show();
 
 
@@ -113,7 +113,7 @@ namespace pikappDes.Droid
                     throw new Exception("Custom pin not found");
                 }
 
-                //====================== we can cutomize info window here
+                //====================== cutomize info window here
 
                 //if (customPin.Name.Equals("Xamarin"))
                 //{
@@ -133,11 +133,11 @@ namespace pikappDes.Droid
                 if (infoTitle != null)
                 {
                     //infoTitle.Text = customPin.Phone.ToString();
-                    infoTitle.Text = "Ping : ";
+                    infoTitle.Text = "     envoyer demande a : ";
                 }
                 if (infoSubtitle != null)
                 {
-                    infoSubtitle.Text = customPin.phone;
+                    infoSubtitle.Text = customPin.name;
                 }
 
                 return view;

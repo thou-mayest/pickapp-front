@@ -45,10 +45,32 @@ namespace pikappDes
             _chat.OnAccepted(OnAccepted);
             _chat.RoomCreated(RoomCreate);
             TryChatConnect();
-            updateMap();
+            //updateMap();
+
             //Task.Run(() => updateMap());
             //t.Wait();
 
+        }
+
+
+        protected override void OnAppearing()
+        {
+            if (MyMap.MapType == MapType.Hybrid && Preferences.Get("MAP", "H") != "H")
+            {
+                MyMap.MapType = MapType.Street;
+            }
+            else if (MyMap.MapType == MapType.Street && Preferences.Get("MAP", "H") != "S")
+            {
+                MyMap.MapType = MapType.Hybrid;
+            }
+
+            if(firstRun)
+            {
+                
+                MyMap.IsVisible = false;
+                firstRun = false;
+                updateMap();
+            }
         }
 
         public void TryChatConnect()
@@ -72,7 +94,7 @@ namespace pikappDes
                 }
                 catch (Exception)
                 {
-                    DisplayAlert("Error", "Chat service Connection failed", "Cancel");
+                    DisplayAlert("Error2", "Chat service Connection failed", "Cancel");
                 }
 
 
@@ -96,12 +118,7 @@ namespace pikappDes
         private async Task updateMap()
         {
 
-            if (firstRun)
-            {
-                firstRun = false;
-
-                MyMap.IsVisible = false;
-            }
+            
             var LocatorStatus =await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
                
             if (LocatorStatus != PermissionStatus.Granted)
@@ -114,9 +131,9 @@ namespace pikappDes
             {
                 try
                 {
-                    await GetUriAsync(false);
+                    
                    
-                    var posGPS = await Utility.GetPos();
+                    var posGPS = await Utility.GetPos(false);
                    
                     // get position and update URI 
 
@@ -127,7 +144,8 @@ namespace pikappDes
                     MyMap.IsShowingUser = true;
 
                     MyMap.CustomPins = new List<CustomPins>();
-                    
+
+                    await GetUriAsync(false);
                     UpdateLists();
                    
                 }
@@ -147,23 +165,8 @@ namespace pikappDes
          
         private async Task UpdateLists()
         {
-
-
-            if (MyMap.MapType == MapType.Hybrid && Preferences.Get("MAP", "H") != "H")
-            {
-                MyMap.MapType = MapType.Street;
-            }
-            else if (MyMap.MapType == MapType.Street && Preferences.Get("MAP","H") != "S")
-            {
-                MyMap.MapType = MapType.Hybrid ;
-            }
-            //updating taxis list
-
-            //string uri = "https://00c83087.ngrok.io/api/values";
             if (Uri != null)
             {
-                    //client.DefaultRequestHeaders.Clear();
-                //client.DefaultRequestHeaders.Add("USR", Preferences.Get("USR","C"));
                 try
                 {
                     UserList.Clear();
@@ -183,7 +186,7 @@ namespace pikappDes
                             PopulateCustomClient(); //============== populate map with pins OTHER
 
                     }
-                    if(res == "ERROR")
+                    if(res == "ERROR1")
                     {
                         await DisplayAlert("ERROR", "Connection failed", "Cancel");
                     }
@@ -264,7 +267,6 @@ namespace pikappDes
                 pin.InfoWindowClicked += pin_clicked;
 
 
-
                 MyMap.CustomPins.Add(pin);
                 MyMap.Pins.Add(pin);
 
@@ -274,7 +276,7 @@ namespace pikappDes
 
         public async Task SendUpdate()
         {
-            var posGPS = await Utility.GetPos();
+            var posGPS = await Utility.GetPos(true);
 
             Enum.TryParse(Preferences.Get("T", "Client"), out ClienType type);
             
@@ -315,17 +317,24 @@ namespace pikappDes
             {
                 
                 _chat.SendPing(selected_pin.UID, Mycreds,secret);
-                DisplayAlert("Send", "Ping sent: "+ selected_pin.UID, "Ok");
+                
             }
             catch (Exception)
             {
                 TryChatConnect();
+                DisplayAlert("Error", "connection fail try again", "Ok");
+
             }
 
             
 
             //PhoneDialer.Open(selected_pin.Phone.ToString());
             //Launcher.OpenAsync(new Uri("tel:"+selected_pin.phone.ToString()));
+        }
+
+        private void Msgs_taped(object send,EventArgs e)
+        {
+            DisplayAlert("tes", "test for msgs button", "Ok");
         }
 
         private void OnChatError(string msg)
@@ -348,12 +357,19 @@ namespace pikappDes
             //if secret existes in dictionnary then call CreateRoom()
             if (_chat.IsPendingSecret(uid,secret))
             {
-                DisplayAlert("Accepted", uid, "Ok");
+               
                 _chat.CreateRoom(Mycreds,RID,uid);
+                DisplayAlert("Accepted", "request accepted you can chat now ", "Ok");
+
+
+
+
+                Navigation.PushAsync(new MessagesListPage());
+
             }
             else
             {
-                DisplayAlert("ERROR", "SECRET NOT MATCHING", "OK"); //// FOR TEST ONLY /// PROB CHALLENGE??
+                DisplayAlert("ERROR", "SECRET MISSMATCH", "OK"); //// FOR TEST ONLY /// PROB CHALLENGE??
             }
 
         }
@@ -363,9 +379,10 @@ namespace pikappDes
             // msglist += RID
             // navigation = MsgPage
 
-            DisplayAlert("CREATED", "room: " + RID, "Ok"); // DELETE, THIS FOR TESTING ONLY
+
+            
+            //DisplayAlert("CREATED", "room: " + RID, "Ok"); // DELETE, THIS FOR TESTING ONLY
 
         }
-
     }
 }

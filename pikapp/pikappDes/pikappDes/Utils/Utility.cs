@@ -32,8 +32,8 @@ namespace pikappDes.Utils
             HttpClient urigetter = new HttpClient(handler);
             try
             {
-                //uri = new Uri(await urigetter.GetStringAsync(furi) + "/api/values").ToString();
-                uri = "https://700c78874a07.ngrok.io/api/values";
+                uri = new Uri(await client.GetStringAsync(furi) + "/api/values").ToString();
+                //uri = "https://a473-41-62-128-147.ngrok.io/api/values";
                 
 
                 err = false;
@@ -186,7 +186,7 @@ namespace pikappDes.Utils
             //return string "UPDATED" or "LOGIN_ERROR"
         }
 
-        public static async Task<Plugin.Geolocator.Abstractions.Position> GetPos()
+        public static async Task<Plugin.Geolocator.Abstractions.Position> GetPos(bool accurate)
         {
 
 
@@ -194,7 +194,8 @@ namespace pikappDes.Utils
 
             locator.DesiredAccuracy = 10;
 
-            return await locator.GetPositionAsync(TimeSpan.FromSeconds(5));
+            
+            return (accurate)?(await locator.GetPositionAsync(TimeSpan.FromSeconds(5))):(await locator.GetLastKnownLocationAsync());
 
         }
 

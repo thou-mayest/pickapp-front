@@ -3,25 +3,60 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:pikappDes;assembly=pikappDes"
              mc:Ignorable="d"
-             Title="Messages"
+             BackgroundImageSource="background.jpg"
              x:Class="pikappDes.MessagesPage">
-    <ContentPage.Content>
-        <StackLayout BackgroundColor="Black" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-            <Label TextColor="White" Text="Welcome to messages page ...sorry under constructions! :/ "
-                HorizontalTextAlignment="Center" 
-                VerticalTextAlignment="Center" />
-            <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Orientation="Horizontal" Padding="2" Margin="0">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="MyMsgTemplate">
+                <ViewCell>
+                    <StackLayout HorizontalOptions="End">
+                        <Frame Margin="5" CornerRadius="25" Padding="15,10" BackgroundColor="#F2CB05">
+                            <Label HorizontalOptions="Center" TextColor="Black" FontSize="Medium" Text="{Binding msg}"></Label>
+                        </Frame>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+            <DataTemplate x:Key="OtherMsgTemplate">
+                <ViewCell>
+                    <StackLayout HorizontalOptions="Start">
+                        <Frame Margin="5" CornerRadius="25" Padding="15,10" BackgroundColor="#D9D9D9">
+                            <Label HorizontalOptions="Center" TextColor="Black" FontSize="Medium" Text="{Binding msg}"></Label>
+                        </Frame>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+            <local:MessageTemplateSelector x:Key="MessagesTemplateSelector"
+                MyMsg="{StaticResource MyMsgTemplate}"
+                OtherMsg="{StaticResource OtherMsgTemplate}" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Fill" VerticalOptions="Fill">
+            <Image x:Name="User_image" HorizontalOptions="Start">
 
+            </Image>
+            <Label x:Name="UsrName" FontSize="Large" HorizontalOptions="Start" VerticalOptions="Center"></Label>
+            <StackLayout HorizontalOptions="FillAndExpand"></StackLayout>
+
+
+            <ImageButton x:Name="ShowOnMap" BackgroundColor="Transparent" Margin="2" Padding="2" HeightRequest="35" WidthRequest="35" Source="RAW_map.png" Clicked="ShowOnMap_Clicked" HorizontalOptions="End" Aspect="AspectFit" VerticalOptions="Center"></ImageButton>
+            <ImageButton x:Name="Call_Button" BackgroundColor="Transparent"  Margin="1" Padding="2" HeightRequest="38" WidthRequest="38" Source="phone.png" Clicked="Call_Button_Clicked" HorizontalOptions="End" Aspect="AspectFit" VerticalOptions="Center"></ImageButton>
+
+        </StackLayout>
+    </NavigationPage.TitleView>
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="Transparent" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <ListView VerticalOptions="EndAndExpand" x:Name="MessagesListView" ItemTemplate="{StaticResource MessagesTemplateSelector}" ItemsSource="{Binding messages_collection}" HasUnevenRows="True" SeparatorVisibility="None">
+            </ListView>
+            <StackLayout VerticalOptions="End" HorizontalOptions="FillAndExpand" Orientation="Horizontal" Padding="2" Margin="0">
                 <Frame HeightRequest="40" CornerRadius="20" Margin="5" Padding="5" VerticalOptions="EndAndExpand" Opacity="0.8" HorizontalOptions="FillAndExpand">
-                    <Entry x:Name="Msg" Placeholder="..." Keyboard="Chat" VerticalOptions="Start"  HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand"></Entry>
+                    <Entry x:Name="MsgEntry" Placeholder="..." Text="" Keyboard="Chat" VerticalOptions="Start"  HorizontalTextAlignment="Start" HorizontalOptions="FillAndExpand"></Entry>
 
                 </Frame>
-                <Button Margin="5" Padding="1" VerticalOptions="EndAndExpand" Text="send" HorizontalOptions="Fill" Clicked="Send_Msg"></Button>
+                <ImageButton HeightRequest="50" WidthRequest="50" Aspect="AspectFit"  Source="msg_round.png" BackgroundColor="Transparent" Margin="2" Padding="0" VerticalOptions="EndAndExpand"  HorizontalOptions="Fill" Clicked="Send_Msg"></ImageButton>
             </StackLayout>
-            
-
-
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

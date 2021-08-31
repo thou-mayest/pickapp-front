@@ -4,7 +4,7 @@ using System.Text;
 
 namespace pikappDes.Utils.modals
 {
-    class UserProp
+    public class UserProp
     {
 
         public string name { get; set; }

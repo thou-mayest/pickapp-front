@@ -21,8 +21,13 @@ namespace pikappDes.Utils
         Task CreateRoom(Creds Mycreds, string RID, string UID);
         void RoomCreated(Action<string> action);
         Task GetMyRooms(Creds MyCreds);
-        void RecMyrooms(Action<string> action);
-        void OnMsgRec(Action action);
+        void RecMyrooms(Action<List<ChatRoomProp>> action);
+        Task GetMessages(Creds ThisCreds, string RID);
+        void RecMessages(Action<List<MessageModel>> action);
+        Task SendMsg(Creds MyCreds, string RID, string msg);
+        void DirectMsg(Action<MessageModel,string> action);
+        Task GetUserLocation(Creds MyCreds, string UID);
+        void RecUserLoc(Action<string> action);
         Task Disconnect();
     }
 }

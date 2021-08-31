@@ -5,8 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
+using Xamarin.Essentials;
 using Xamarin.Forms.Xaml;
 using pikappDes.Utils;
+using System.Collections.ObjectModel;
+using pikappDes.Utils.modals;  
 
 namespace pikappDes
 {
@@ -15,23 +18,144 @@ namespace pikappDes
     {
 
         IChat _chat;
+
+        ObservableCollection<ChatRoomProp> ChatRoomsCollection = new ObservableCollection<ChatRoomProp>();
+        public ObservableCollection<ChatRoomProp> Chatrooms { get { return ChatRoomsCollection; } }
         public MessagesListPage()
         {
-            _chat = DependencyService.Get<IChat>();
+            
 
-            _chat.RecMyrooms(RecMyRooms);
             InitializeComponent();
+
+            _chat = DependencyService.Get<IChat>();
+            
+            _chat.OnError(OnChatError);
+            _chat.RecMyrooms(RecMyRooms);
+
+
+            ChatRoomsListView.ItemsSource = ChatRoomsCollection;
+            ChatRoomsListView.ItemSelected += ChatRoomsListView_ItemSelected;
+
+        }
+
+        private void ChatRoomsListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            
+            var item = e.SelectedItem as ChatRoomProp;
+            if (item == null)
+                return;
+            Navigation.PushAsync(new MessagesPage(item.RID,item.Duser,item.LastMessage));
+
+            ChatRoomsListView.SelectedItem = null;
+
+        }
+
+        public void GetMyRooms()
+        {
+            Enum.TryParse(Preferences.Get("T", "Client"), out ClienType StoredTpe);
+            Creds MyCreds = new Creds()
+            {
+                //    
+                //Mycreds.UID = Preferences.Get("UID", "");
+                //Mycreds.SID = Preferences.Get("SID", "");
+                //Mycreds.type = type;
+
+                UID = Preferences.Get("UID", ""),
+                SID = Preferences.Get("SID", ""),
+                type = StoredTpe,
+
+            };
+            if(!_chat.IsConnected())
+            {
+
+                DisplayAlert("messagelistpage", "HUB NOT CONENCTED", "OK");
+            }
+
+            _chat.GetMyRooms(MyCreds);
+
+
         }
 
 
-        public void RecMyRooms(string RIDs)
+        public void RecMyRooms(List<ChatRoomProp> ResChatRooms)
         {
+            try
+            {
+                ChatRoomsCollection.Clear();
+                foreach (ChatRoomProp item in ResChatRooms)
+                {
+                    //var existingItem = ChatRoomsCollection.Where(x => x.RID == item.RID);
+                    //if (existingItem == null)
+                    //{
+
+                    //}
+                    ChatRoomsCollection.Insert(0,item);
+                }
+
+                
+            }
+            catch (Exception x)
+            {
+
+                DisplayAlert("error",x.Message,"OK");
+            }
+
+            
+
+            //try
+            //{
+            //    foreach (ChatRoomProp item in ResChatRooms)
+            //    {
+            //        try
+            //        {
+            //            var existingItem = ChatRoomsCollection.Where(x => x.RID == item.RID);
+            //            if (existingItem == null)
+            //            {
+            //                ChatRoomsCollection.Insert(0, item);
+            //            }
+            //        }
+            //        catch (Exception)
+            //        {
+            //            ChatRoomsCollection.Insert(0 ,item);
+            //        }
+                    
+
+
+            //        DisplayAlert("item", RresChatRooms.Count.ToString(), "Ok");
+
+            //    }
+            //}
+            //catch (Exception x)
+            //{
+
+            //    DisplayAlert("error",x.Message,"OK");
+            //}
+
+            
+
+            //ChatRoomsCollection.Insert(0, new ChatRoomProp { RID = "TEST LOCAL RID", Duser = DuserLocal, });
+
+
             // RIDs seperated with  "." 
             //get profile data of for preview  <<=====
             //popluate list with rooms 
 
-            DisplayAlert("ROOMS", RIDs, "OK");
+        }
+        protected override void OnAppearing()
+        {
+            GetMyRooms();
         }
 
+        private void OnChatError(string msg)
+        {
+            DisplayAlert("Error", msg, "Ok");
+        }
+
+        //private void Frame_Focused(object sender, FocusEventArgs e)
+        //{
+        //    var Selected = e.VisualElement as Frame;
+
+        //    Selected.BorderColor = Color.Red;
+        //}
     }
 }

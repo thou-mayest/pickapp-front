@@ -65,7 +65,6 @@
                                                     <Image Margin="8" Source="{Binding ImageSource}"></Image>
                                                     <Label TextColor="Black" VerticalOptions="Center" FontSize="Medium" Text="{Binding Title}"></Label>
                                                 </StackLayout>
-                                                
                                             </ViewCell>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>

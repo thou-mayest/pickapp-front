@@ -90,7 +90,6 @@ namespace pikappDes
             pages.TryGetValue(item.Id, out navpage);
             navpage.Title = item.Title;
 
-
             Detail = navpage;
             Detail.Title = item.Title;
 
@@ -120,25 +119,25 @@ namespace pikappDes
         public bool free;
         //public HttpClient client = new HttpClient();
 
-        private void Free_Clicked(object sender, EventArgs e)
-        {
-            Free_button.IconImageSource = "pin.png";
-            if (Preferences.ContainsKey("FREE"))
-                free = Preferences.Get("FREE", true );
+        //private void Free_Clicked(object sender, EventArgs e)
+        //{
+        //    Free_button.IconImageSource = "pin.png";
+        //    if (Preferences.ContainsKey("FREE"))
+        //        free = Preferences.Get("FREE", true );
 
 
-            switch (free)
-            {
-                case true:
-                    Preferences.Set("FREE", false);
-                    Free_button.IconImageSource = "OffToggle.png";
-                    break;
-                case false:
-                    Preferences.Set("FREE",true);
-                    Free_button.IconImageSource = "OnToggle.png";
-                    break;
-            }
-        }
+        //    switch (free)
+        //    {
+        //        case true:
+        //            Preferences.Set("FREE", false);
+        //            Free_button.IconImageSource = "OffToggle.png";
+        //            break;
+        //        case false:
+        //            Preferences.Set("FREE",true);
+        //            Free_button.IconImageSource = "OnToggle.png";
+        //            break;
+        //    }
+        //}
 
         public void SendNotFReq()
         {

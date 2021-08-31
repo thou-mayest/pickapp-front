@@ -18,11 +18,32 @@ namespace pikappDes.Utils
         {
             BuildConnection();
         }
+
+        public bool IsConnected()
+        {
+            bool hubDisconnected;
+            try
+            {
+                hubDisconnected = ConnectionHub.State == HubConnectionState.Disconnected ? true : false;
+            }
+            catch (Exception)
+            {
+                hubDisconnected = true;
+            }
+            if (hubDisconnected)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
         public async void BuildConnection()
         {
-            uri = await Utility.GetUri(false);
+            //uri = await Utility.GetUri(false);
             ConnectionHub = new HubConnectionBuilder()
-                .WithUrl(uri + "/ChatHub")
+                .WithUrl(await Utility.GetUri(true) + "/ChatHub")
                 .Build();
         }
 
@@ -46,17 +67,7 @@ namespace pikappDes.Utils
             await ConnectionHub.StartAsync();
         }
 
-        public bool IsConnected()
-        {
-            if(ConnectionHub.State == HubConnectionState.Disconnected)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
+       
 
         public async Task SendPing(string DestUID,Creds creds,int secret)
         {
@@ -125,9 +136,37 @@ namespace pikappDes.Utils
             await ConnectionHub.InvokeAsync("GetMyRooms", MyCreds);
         }
 
-        public void RecMyrooms(Action<string> action)
+        public void RecMyrooms(Action<List<ChatRoomProp>> action)
         {
-            ConnectionHub.On<string>("RecMyrooms", action);
+            ConnectionHub.On<List<ChatRoomProp>>("RecMyrooms", action);
+        }
+
+        public async Task GetMessages(Creds ThisCreds, string RID)
+        {
+            await ConnectionHub.InvokeAsync("GetMessages", ThisCreds, RID);
+        }
+
+        public void RecMessages(Action<List<MessageModel>> action)
+        {
+            ConnectionHub.On<List<MessageModel>>("RecRoomMsgs",action);
+        }
+
+        public async Task SendMsg(Creds MyCreds,string RID,string msg)
+        {
+            await ConnectionHub.InvokeAsync("SendMsg", MyCreds, RID, msg);
+        }
+
+        public void DirectMsg(Action<MessageModel,string> action)
+        {
+            ConnectionHub.On<MessageModel,string>("DirectMsg", action);
+        }
+        public async Task GetUserLocation(Creds MyCreds,string UID)
+        {
+            await ConnectionHub.InvokeAsync("GetUserLocation", MyCreds,UID);
+        }
+        public void RecUserLoc(Action<string> action)
+        {
+            ConnectionHub.On<string>("RecUserLoc", action);
         }
     }
 }

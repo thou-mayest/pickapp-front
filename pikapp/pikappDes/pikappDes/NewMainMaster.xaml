@@ -8,13 +8,7 @@
              BackgroundImageSource="background.jpg"     
              x:Class="pikappDes.NewMainMaster"
              xmlns:pages="clr-namespace:pikappDes">
-
-    <MasterDetailPage.ToolbarItems>
-        <ToolbarItem x:Name="Free_button" IconImageSource="OnToggle.png" Clicked="Free_Clicked"></ToolbarItem>
-        <ToolbarItem Name="msg_button" IconImageSource="msg.png" Clicked="msg_button_Clicked"></ToolbarItem>
-        
-    </MasterDetailPage.ToolbarItems>
-  <MasterDetailPage.Master>
+    <MasterDetailPage.Master>
     <pages:MasterTest x:Name="MasterPage" />
   </MasterDetailPage.Master>
   <!--<MasterDetailPage.Detail>
