@@ -5,18 +5,14 @@
     android:layout_height="wrap_content"
     android:minWidth="25px"
     android:minHeight="25px"
-    android:fadingEdge="horizontal">
+    android:fadingEdge="horizontal"
+    android:padding="0px"
+    android:background="@android:color/black">
     <LinearLayout
         android:orientation=    "vertical"
         android:layout_width=    "250.0dp"
         android:layout_height=    "88.5dp"
         android:layout_weight=    "0">
-        <LinearLayout
-        android:orientation=    "vertical"
-        android:layout_width=    "fill_parent"
-        android:layout_height=    "fill_parent"
-        android:layout_weight=    "0"
-        android:background="@drawable/background_notes">
         <TextView
             android:text="Large Text"
             android:textAppearance="?android:attr/textAppearanceLarge"
@@ -25,16 +21,13 @@
             android:minWidth="25px"
             android:minHeight="25px"
             android:id="@+id/InfoWindowTitle"
-            android:textColor="@android:color/black"/>
+            android:textColor="@android:color/white"/>
         <TextView
             android:id="@+id/InfoWindowSubtitle"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="InfoWindowSubtitle"
-            android:textColor="@android:color/black" />
+            android:gravity="center_vertical|right"
+            android:textColor="@android:color/white" />
     </LinearLayout>
-    </LinearLayout>
-    
-
 </LinearLayout>

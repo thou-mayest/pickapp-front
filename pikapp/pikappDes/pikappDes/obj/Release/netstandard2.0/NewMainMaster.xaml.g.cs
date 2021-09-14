@@ -14,7 +14,7 @@ namespace pikappDes {
     
     
     [global::Xamarin.Forms.Xaml.XamlFilePathAttribute("NewMainMaster.xaml")]
-    public partial class NewMainMaster : global::Xamarin.Forms.MasterDetailPage {
+    public partial class NewMainMaster : global::Xamarin.Forms.FlyoutPage {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
         private global::pikappDes.MasterTest MasterPage;

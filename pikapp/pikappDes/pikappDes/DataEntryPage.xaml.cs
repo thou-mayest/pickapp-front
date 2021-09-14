@@ -131,9 +131,7 @@ namespace pikappDes
                             Preferences.Set("L", true);
 
 
-                            NavigationPage master = new NavigationPage(new NewMainMaster());
-
-
+                            FlyoutPage master = new NewMainMaster();
                             Application.Current.MainPage = master;
 
                         }

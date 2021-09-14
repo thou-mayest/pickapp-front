@@ -77,7 +77,6 @@ namespace pikappDes.Droid
            
             base.OnMapReady(map);
 
-          
 
             NativeMap.InfoWindowClick += OnInfoWindowClick;
             NativeMap.SetInfoWindowAdapter(this);
@@ -87,9 +86,11 @@ namespace pikappDes.Droid
         {
             var marker = new MarkerOptions();
             marker.SetPosition(new LatLng(pin.Position.Latitude, pin.Position.Longitude));
-            marker.SetTitle(pin.Label);
-            marker.SetSnippet(pin.Address);
-            if(pin.Type == PinType.Generic)
+            //marker.SetTitle(pin.Label);
+            //marker.SetSnippet(pin.Address);
+            marker.SetTitle(string.Empty);
+            marker.SetSnippet(string.Empty);
+            if (pin.Type == PinType.Generic)
                 marker.SetIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.pinS)); // ================ PUT AN ICON HERE
             else
                 marker.SetIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.pinC)); // ================ PUT AN ICON HERE
@@ -101,50 +102,50 @@ namespace pikappDes.Droid
 
         Android.Views.View GoogleMap.IInfoWindowAdapter.GetInfoContents(Marker marker)
         {
-            var inflater = Android.App.Application.Context.GetSystemService(Context.LayoutInflaterService) as Android.Views.LayoutInflater;
-            if (inflater != null)
-            {
-                Android.Views.View view;
+            //var inflater = Android.App.Application.Context.GetSystemService(Context.LayoutInflaterService) as Android.Views.LayoutInflater;
+            //if (inflater != null)
+            //{
+            //    Android.Views.View view;
 
-                var customPin = GetCustomPin(marker);
+            //    var customPin = GetCustomPin(marker);
 
-                if (customPin == null)
-                {
-                    throw new Exception("Custom pin not found");
-                }
+            //    if (customPin == null)
+            //    {
+            //        throw new Exception("Custom pin not found");
+            //    }
 
-                //====================== cutomize info window here
+            //    //====================== cutomize info window here
 
-                //if (customPin.Name.Equals("Xamarin"))
-                //{
-                //    view = inflater.Inflate(Resource.Layout.XamarinMapInfoWindow, null);
-                //}
-                //else
-                //{
-                //    view = inflater.Inflate(Resource.Layout.MapInfoWindow, null);
-                //}
-                //=============================================================
+            //    //if (customPin.Name.Equals("Xamarin"))
+            //    //{
+            //    //    view = inflater.Inflate(Resource.Layout.XamarinMapInfoWindow, null);
+            //    //}
+            //    //else
+            //    //{
+            //    //    view = inflater.Inflate(Resource.Layout.MapInfoWindow, null);
+            //    //}
+            //    //=============================================================
 
-                view = inflater.Inflate(Resource.Layout.CustomInfoWindow, null);
+            //    view = inflater.Inflate(Resource.Layout.CustomInfoWindow, null);
 
-                var infoTitle = view.FindViewById<TextView>(Resource.Id.InfoWindowTitle) ;
-                var infoSubtitle = view.FindViewById<TextView>(Resource.Id.InfoWindowSubtitle);
+            //    var infoTitle = view.FindViewById<TextView>(Resource.Id.InfoWindowTitle) ;
+            //    var infoSubtitle = view.FindViewById<TextView>(Resource.Id.InfoWindowSubtitle);
 
-                if (infoTitle != null)
-                {
-                    //infoTitle.Text = customPin.Phone.ToString();
-                    infoTitle.Text = "     envoyer demande a : ";
-                }
-                if (infoSubtitle != null)
-                {
-                    infoSubtitle.Text = customPin.name;
-                }
+            //    if (infoTitle != null)
+            //    {
+            //        //infoTitle.Text = customPin.Phone.ToString();
+            //        infoTitle.Text = string.Empty;
+            //    }
+            //    if (infoSubtitle != null)
+            //    {
+            //        infoSubtitle.Text = string.Empty;
+            //    }
 
-                return view;
+            //    return view;
 
 
-                // return null;
-            }
+            //    // return null;
+            //}
             return null;
         }
 

@@ -16,6 +16,7 @@ C:\Users\brahmi\Desktop\projects\PickApp\dev\pickapp project\pickapp-front\pikap
 C:\Users\brahmi\Desktop\projects\PickApp\dev\pickapp project\pickapp-front\pikapp\pikappDes\pikappDes\obj\Release\netstandard2.0\OptionsPage.xaml.g.cs
 C:\Users\brahmi\Desktop\projects\PickApp\dev\pickapp project\pickapp-front\pikapp\pikappDes\pikappDes\obj\Release\netstandard2.0\PingPage.xaml.g.cs
 C:\Users\brahmi\Desktop\projects\PickApp\dev\pickapp project\pickapp-front\pikapp\pikappDes\pikappDes\obj\Release\netstandard2.0\ProAccPage.xaml.g.cs
+C:\Users\brahmi\Desktop\projects\PickApp\dev\pickapp project\pickapp-front\pikapp\pikappDes\pikappDes\obj\Release\netstandard2.0\TrackingMap.xaml.g.cs
 C:\Users\brahmi\Desktop\projects\PickApp\dev\pickapp project\pickapp-front\pikapp\pikappDes\pikappDes\obj\Release\netstandard2.0\pikappDes.AssemblyInfoInputs.cache
 C:\Users\brahmi\Desktop\projects\PickApp\dev\pickapp project\pickapp-front\pikapp\pikappDes\pikappDes\obj\Release\netstandard2.0\pikappDes.AssemblyInfo.cs
 C:\Users\brahmi\Desktop\projects\PickApp\dev\pickapp project\pickapp-front\pikapp\pikappDes\pikappDes\obj\Release\netstandard2.0\pikappDes.csproj.CoreCompileInputs.cache
@@ -23,4 +24,4 @@ C:\Users\brahmi\Desktop\projects\PickApp\dev\pickapp project\pickapp-front\pikap
 C:\Users\brahmi\Desktop\projects\PickApp\dev\pickapp project\pickapp-front\pikapp\pikappDes\pikappDes\obj\Release\netstandard2.0\pikappDes.dll
 C:\Users\brahmi\Desktop\projects\PickApp\dev\pickapp project\pickapp-front\pikapp\pikappDes\pikappDes\obj\Release\netstandard2.0\ref\pikappDes.dll
 C:\Users\brahmi\Desktop\projects\PickApp\dev\pickapp project\pickapp-front\pikapp\pikappDes\pikappDes\obj\Release\netstandard2.0\pikappDes.pdb
-C:\Users\brahmi\Desktop\projects\PickApp\dev\pickapp project\pickapp-front\pikapp\pikappDes\pikappDes\obj\Release\netstandard2.0\TrackingMap.xaml.g.cs
+C:\Users\brahmi\Desktop\projects\PickApp\dev\pickapp project\pickapp-front\pikapp\pikappDes\pikappDes\obj\Release\netstandard2.0\pikappDes.csproj.AssemblyReference.cache

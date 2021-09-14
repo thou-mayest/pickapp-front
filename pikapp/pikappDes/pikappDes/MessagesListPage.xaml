@@ -2,38 +2,41 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              Title="Contacts"
-             BackgroundImageSource="background2.png"
              x:Class="pikappDes.MessagesListPage">
     <ContentPage.Content>
-        <StackLayout VerticalOptions="FillAndExpand" Padding="0" BackgroundColor="Transparent" Opacity="10">
-            <Frame HeightRequest="50" CornerRadius="5" BackgroundColor="White" Opacity="30">
-                <StackLayout Orientation="Horizontal">
-                    <Image HeightRequest="40"  VerticalOptions="CenterAndExpand" Source="https://endlessicons.com/wp-content/uploads/2015/08/search-icon-2.png" BackgroundColor="Transparent" Aspect="AspectFit"></Image>
-                    <Entry HorizontalOptions="FillAndExpand" Placeholder="Search" BackgroundColor="Transparent"></Entry>
-                </StackLayout>
-            </Frame>
-            <ListView x:Name="ChatRoomsListView" ItemsSource="{Binding Chatrooms}" RowHeight="100" SeparatorVisibility="None">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Frame HasShadow="True" BorderColor="White" CornerRadius="7" BackgroundColor="White" Padding="10" Margin="10" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-                                <StackLayout Orientation="Horizontal" HeightRequest="400" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-                                    <StackLayout Padding="2">
-                                        <Frame BackgroundColor="Transparent" HeightRequest="40" Padding="2">
-                                            <Image VerticalOptions="CenterAndExpand" Source="eaxi.png" BackgroundColor="Transparent" Margin="0" Aspect="AspectFill" ></Image>
-                                        </Frame>
-                                    </StackLayout>
-                                    <StackLayout Padding="0" Margin="0" VerticalOptions="FillAndExpand">
-                                        <Label Padding="0" Text="{Binding Duser.name}" FontSize="Title" TextColor="Black" VerticalOptions="StartAndExpand"></Label>
-                                        <Label Padding="0" Text="{Binding LastMessage.msg}" FontSize="Subtitle" TextColor="DarkSlateGray" VerticalOptions="StartAndExpand"></Label>
-                                    </StackLayout>
+        <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <Image AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" Source="background2.png" Aspect="AspectFill"/>
 
-                                </StackLayout>
-                            </Frame>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackLayout>
+            <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="1,1,1,1"  VerticalOptions="FillAndExpand" Padding="0" BackgroundColor="Transparent" Opacity="10">
+                <Frame HeightRequest="50" CornerRadius="5" BackgroundColor="White" Opacity="30">
+                    <StackLayout Orientation="Horizontal">
+                        <Image HeightRequest="40"  VerticalOptions="CenterAndExpand" Source="https://endlessicons.com/wp-content/uploads/2015/08/search-icon-2.png" BackgroundColor="Transparent" Aspect="AspectFit"></Image>
+                        <Entry HorizontalOptions="FillAndExpand" Placeholder="Search" BackgroundColor="Transparent"></Entry>
+                    </StackLayout>
+                </Frame>
+                <ListView BackgroundColor="Transparent" x:Name="ChatRoomsListView" ItemsSource="{Binding Chatrooms}" RowHeight="100" SeparatorVisibility="None">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Frame HasShadow="True" BorderColor="White" CornerRadius="7" BackgroundColor="White" Padding="10" Margin="10" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                                    <StackLayout Orientation="Horizontal" HeightRequest="400" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                                        <StackLayout Padding="2">
+                                            <Frame BackgroundColor="Transparent" HeightRequest="40" Padding="2">
+                                                <Image VerticalOptions="CenterAndExpand" Source="eaxi.png" BackgroundColor="Transparent" Margin="0" Aspect="AspectFill" ></Image>
+                                            </Frame>
+                                        </StackLayout>
+                                        <StackLayout Padding="0" Margin="0" VerticalOptions="FillAndExpand">
+                                            <Label Padding="0" Text="{Binding Duser.name}" FontSize="Title" TextColor="Black" VerticalOptions="StartAndExpand"></Label>
+                                            <Label Padding="0" Text="{Binding LastMessage.msg}" FontSize="Subtitle" TextColor="DarkSlateGray" VerticalOptions="StartAndExpand"></Label>
+                                        </StackLayout>
+
+                                    </StackLayout>
+                                </Frame>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

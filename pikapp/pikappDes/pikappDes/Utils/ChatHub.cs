@@ -45,6 +45,7 @@ namespace pikappDes.Utils
             ConnectionHub = new HubConnectionBuilder()
                 .WithUrl(await Utility.GetUri(true) + "/ChatHub")
                 .Build();
+            await Connect();
         }
 
         public void OnMsgRec(Action action)
@@ -88,6 +89,11 @@ namespace pikappDes.Utils
         public async Task Register(Creds creds)
         {
             await ConnectionHub.InvokeAsync("RegisterSgID", creds);
+        }
+        public void ReRegister(Action action)
+        {
+            ConnectionHub.On("ReRegister", action);
+            //OnAccepted(string RID,int secret);
         }
 
         public async Task Disconnect()

@@ -12,6 +12,7 @@ namespace pikappDes.Utils
         void OnError(Action<string> action);
         bool IsConnected();
         Task Register(Creds creds);
+        void ReRegister(Action action);
         Task SendPing(string uid, Creds creds,int secret);
         void AddPendingReq(int secret, string uid);
         void OnPing(Action<string,int> action);

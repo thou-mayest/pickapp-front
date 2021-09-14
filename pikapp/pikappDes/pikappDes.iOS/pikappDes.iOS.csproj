@@ -14,6 +14,7 @@
     <AssemblyName>pikappDes.iOS</AssemblyName>
     <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
+    <ProvisioningType>manual</ProvisioningType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -60,8 +61,14 @@
     <MtouchArch>ARM64</MtouchArch>
     <CodesignKey>iPhone Developer</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <MtouchHttpClientHandler>CFNetworkHandler</MtouchHttpClientHandler>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
+    <AppExtensionDebugBundleId />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CustomMapRenderer.cs" />
+    <Compile Include="CustomMKAnnotationView .cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <None Include="Entitlements.plist" />
@@ -145,5 +152,89 @@
       <Project>{9A17279E-22B6-427A-8590-0FA3C0B400DA}</Project>
       <Name>pikappDes</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\logo1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\masterbackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\masterbackground2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\msg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\msg_notif.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\msg_round.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\msg_square.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\OffToggle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\OnToggle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\phone.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\pin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\pinC.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\pingPageBackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\pinS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\rating.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\RAW_disconnect.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\RAW_history.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\RAW_map.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\RAW_msg.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\RAW_options.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\RAW_proAcc.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\background.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\background_notes.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\background_notes2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\background2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\backgroundblur_notes2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\detail_background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\eaxi.png" />
   </ItemGroup>
 </Project>

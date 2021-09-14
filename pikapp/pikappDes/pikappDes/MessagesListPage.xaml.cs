@@ -18,13 +18,14 @@ namespace pikappDes
     {
 
         IChat _chat;
+        Creds MyCreds;
 
         ObservableCollection<ChatRoomProp> ChatRoomsCollection = new ObservableCollection<ChatRoomProp>();
         public ObservableCollection<ChatRoomProp> Chatrooms { get { return ChatRoomsCollection; } }
         public MessagesListPage()
         {
             
-
+            
             InitializeComponent();
 
             _chat = DependencyService.Get<IChat>();
@@ -36,6 +37,47 @@ namespace pikappDes
             ChatRoomsListView.ItemsSource = ChatRoomsCollection;
             ChatRoomsListView.ItemSelected += ChatRoomsListView_ItemSelected;
 
+
+            Enum.TryParse(Preferences.Get("T", "Client"), out ClienType StoredTpe);
+            MyCreds = new Creds()
+            {
+                //    
+                //Mycreds.UID = Preferences.Get("UID", "");
+                //Mycreds.SID = Preferences.Get("SID", "");
+                //Mycreds.type = type;
+
+                UID = Preferences.Get("UID", ""),
+                SID = Preferences.Get("SID", ""),
+                type = StoredTpe,
+
+            };
+
+        }
+
+        public void TryChatConnect()
+        {
+            bool connected;
+            try
+            {
+                connected = _chat.IsConnected();
+            }
+            catch (Exception)
+            {
+
+                connected = false;
+            }
+            if (!connected)
+            {
+                try
+                {
+                    _chat.Connect();
+                    _chat.Register(MyCreds);
+                }
+                catch (Exception)
+                {
+                    DisplayAlert("Error", "Realtime service Connection failed", "Cancel");
+                }
+            }
         }
 
         private void ChatRoomsListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -52,28 +94,14 @@ namespace pikappDes
 
         public void GetMyRooms()
         {
-            Enum.TryParse(Preferences.Get("T", "Client"), out ClienType StoredTpe);
-            Creds MyCreds = new Creds()
-            {
-                //    
-                //Mycreds.UID = Preferences.Get("UID", "");
-                //Mycreds.SID = Preferences.Get("SID", "");
-                //Mycreds.type = type;
-
-                UID = Preferences.Get("UID", ""),
-                SID = Preferences.Get("SID", ""),
-                type = StoredTpe,
-
-            };
             if(!_chat.IsConnected())
             {
+                //TryChatConnect();
 
-                DisplayAlert("messagelistpage", "HUB NOT CONENCTED", "OK");
+                DisplayAlert("messagelistpage", "waiting for chat hub", "OK");
             }
 
             _chat.GetMyRooms(MyCreds);
-
-
         }
 
 
@@ -143,6 +171,7 @@ namespace pikappDes
         }
         protected override void OnAppearing()
         {
+            //TryChatConnect();
             GetMyRooms();
         }
 

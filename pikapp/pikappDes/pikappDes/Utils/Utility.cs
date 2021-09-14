@@ -49,15 +49,17 @@ namespace pikappDes.Utils
         
         public static async Task<string> GetUri(bool reload)
         {
-            if (reload || (uri != null || uri != string.Empty))
-            {
-                await GetLnk();
-            }
+            //if (reload || (uri != null || uri != string.Empty))
+            //{
+            //    await GetLnk();
+            //}
             
-            if (!err)
-                return uri;
-            else
-                return null;
+            //if (!err)
+            //    return uri;
+            //else
+            //    return null;
+            uri = "https://pickapp-service.herokuapp.com" + "/api/values";
+            return uri;
         }
 
         public static async Task<string> LoginReq(string baseURI,Creds item,string login_t)
@@ -86,9 +88,6 @@ namespace pikappDes.Utils
             {
                 return "ERROR";
             }
-
-            
-
             // return type : creds (always) 
 
         }
@@ -134,7 +133,6 @@ namespace pikappDes.Utils
             var settings = new JsonSerializerSettings();
             settings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
 
-            Console.WriteLine("tet"); // +++++++++++++++ TESTING TIME
             var json = JsonConvert.SerializeObject(item,settings);
             var itemcontent = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -148,13 +146,36 @@ namespace pikappDes.Utils
             {
                 return "ERROR";
             }
-
-
-            
-
             //return type : list<userprops>
         }
 
+
+        public static async Task<string> GetProfile(string baseURI, Creds item,string UID)
+        {
+
+            string furi = baseURI + "/GetProfile";
+
+            var settings = new JsonSerializerSettings();
+            settings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
+
+            var json = JsonConvert.SerializeObject(item, settings);
+            var itemcontent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            client.DefaultRequestHeaders.Clear();
+            client.DefaultRequestHeaders.Add("UID", UID);
+
+
+            var res = client.PostAsync(furi, itemcontent);
+
+            if (res.Result.IsSuccessStatusCode)
+            {
+                return await res.Result.Content.ReadAsStringAsync();
+            }
+            else
+            {
+                return "ERROR";
+            }
+        }
 
         public static async Task<string> UpdatePos(string baseURI,UserProp item)
         {
@@ -199,6 +220,7 @@ namespace pikappDes.Utils
 
         }
 
-        
+      
+
     }
 }

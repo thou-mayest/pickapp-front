@@ -44,7 +44,7 @@
                     
                     <StackLayout Padding="20">
                         <Label x:Name="Name_label" Text="Name......?" TextColor="Black" FontSize="Large"></Label>
-                        <Label Text="Destination" TextColor="Black" FontSize="Large"></Label>
+                        <Label Text="" TextColor="Black" FontSize="Large"></Label>
                     </StackLayout>
                 </StackLayout>
                 <StackLayout VerticalOptions="Center">

@@ -8,10 +8,10 @@
              x:Class="pikappDes.NewMainMasterDetail"
              Title="Map">
     <NavigationPage.TitleView>
-        
-        <StackLayout Orientation="Horizontal" HorizontalOptions="Fill" VerticalOptions="FillAndExpand">
 
-            <ImageButton HeightRequest="35" WidthRequest="35" Aspect="AspectFit" Source="msg.png" VerticalOptions="Center" HorizontalOptions="EndAndExpand" Clicked="Msgs_taped"></ImageButton>
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Fill" VerticalOptions="FillAndExpand">
+            <Label Text="Map" TextColor="White" FontSize="Large" VerticalOptions="Center"></Label>
+            <ImageButton BackgroundColor="Transparent" HeightRequest="35" WidthRequest="35" Aspect="AspectFit" Source="msg.png" VerticalOptions="Center" HorizontalOptions="EndAndExpand" Clicked="Msgs_taped"></ImageButton>
 
         </StackLayout>
     </NavigationPage.TitleView>

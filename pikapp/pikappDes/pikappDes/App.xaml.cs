@@ -16,7 +16,6 @@ namespace pikappDes
             InitializeComponent();
 
             var ChatService = new ChatHub();
-
             DependencyService.RegisterSingleton<IChat>(ChatService);
 
             MainPage = new  NavigationPage(new MainPage());

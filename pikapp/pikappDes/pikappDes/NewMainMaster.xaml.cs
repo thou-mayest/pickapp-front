@@ -14,14 +14,14 @@ using Plugin.Geolocator;
 namespace pikappDes
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class NewMainMaster : MasterDetailPage
+    public partial class NewMainMaster : FlyoutPage
     {
         Dictionary<int, NavigationPage> pages = new Dictionary<int, NavigationPage>();
         public NewMainMaster()
         {
             InitializeComponent();
             MasterPage.MenuListViw.ItemSelected += ListView_ItemSelected;
-           
+
             pages.Add(0, new NavigationPage(new NewMainMasterDetail()));
             pages.Add(1, new NavigationPage(new MessagesListPage()));
             pages.Add(2, new NavigationPage(new OptionsPage()));
@@ -30,6 +30,7 @@ namespace pikappDes
 
             NavigationPage navpage;
             pages.TryGetValue(0, out navpage);
+
             navpage.Title = "Map";
 
 
@@ -59,14 +60,16 @@ namespace pikappDes
 
                 IsPresented = false;
 
-                System.Diagnostics.Process.GetCurrentProcess().Kill();
 
                 //pages.Clear();
 
                 //Navigation.PopToRootAsync();
                 //NavigationPage master = new NavigationPage(new MainPage());
 
-                KillMe();
+                //KillMe();
+
+                NavigationPage master = new NavigationPage(new MainPage());
+                Application.Current.MainPage = master;
 
                 //Application.Current.MainPage = master;
                 return;

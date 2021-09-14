@@ -44,17 +44,22 @@ namespace pikappDes
             _chat.OnPing(OnPing);
             _chat.OnAccepted(OnAccepted);
             _chat.RoomCreated(RoomCreate);
-            TryChatConnect();
+            _chat.ReRegister(TryChatConnect);
+            
+           
             //updateMap();
 
             //Task.Run(() => updateMap());
             //t.Wait();
+            
 
         }
 
 
-        protected override void OnAppearing()
+        bool firstRun = true;
+        protected override async void OnAppearing()
         {
+            
             if (MyMap.MapType == MapType.Hybrid && Preferences.Get("MAP", "H") != "H")
             {
                 MyMap.MapType = MapType.Street;
@@ -64,12 +69,49 @@ namespace pikappDes
                 MyMap.MapType = MapType.Hybrid;
             }
 
+            await CheckPermission();
+
             if(firstRun)
             {
                 
                 MyMap.IsVisible = false;
                 firstRun = false;
-                updateMap();
+                //updateMap();
+                //MainThread.BeginInvokeOnMainThread(() =>
+                //{
+                //    // Code to run on the main thread
+                //});
+
+                //_ = Task.Run(async () => { await updateMap(); });
+
+                if(Device.RuntimePlatform == Device.iOS)
+                {
+                    await updateMap();
+                }
+                else
+                {
+                    await Task.Run(() => TryChatConnect());
+                    await Task.Run(() => updateMap());
+                    
+                }
+                
+            }
+        }
+        private async Task CheckPermission()
+        {
+            var LocatorStatus = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+            //must be on main thread
+
+            if (LocatorStatus == PermissionStatus.Granted)
+            {
+
+                return;
+            }
+            else
+            {
+                LocatorStatus = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+                Task.Delay(3000).Wait();
+                await CheckPermission();
             }
         }
 
@@ -94,10 +136,12 @@ namespace pikappDes
                 }
                 catch (Exception)
                 {
-                    DisplayAlert("Error2", "Chat service Connection failed", "Cancel");
+                    DisplayAlert("Error", "Realtime service Connection failed", "Cancel");
                 }
-
-
+            }
+            else
+            {
+                _chat.Register(Mycreds);
             }
         }
 
@@ -113,47 +157,68 @@ namespace pikappDes
             Uri = new Uri(await Utility.GetUri(reload));
         }
 
-        bool firstRun = true;
         
         private async Task updateMap()
         {
 
             
-            var LocatorStatus =await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
-               
-            if (LocatorStatus != PermissionStatus.Granted)
+            //var LocatorStatus =await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+               //must be on main thread
+
+            //if (LocatorStatus != PermissionStatus.Granted)
+            //{
+            //    LocatorStatus = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+            //    Task.Delay(500).Wait();
+            //    await updateMap();
+            //}
+            if(1==2)
             {
-                LocatorStatus = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-                await Task.Delay(500);
-                await updateMap();
+                //
             }
             else
             {
                 try
                 {
                     
+                   //check if gps is enabled
                    
                     var posGPS = await Utility.GetPos(false);
-                   
+
                     // get position and update URI 
 
+                    Task.Delay(1000).Wait();
 
-                    MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(posGPS.Latitude, posGPS.Longitude), Distance.FromKilometers(0.3)));
-                   
-                    MyMap.IsVisible = true;
-                    MyMap.IsShowingUser = true;
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(posGPS.Latitude, posGPS.Longitude), Distance.FromKilometers(0.3)));
 
-                    MyMap.CustomPins = new List<CustomPins>();
+                        MyMap.IsVisible = true;
 
+                        MyMap.IsShowingUser = true;
+                        
+                    });
                     await GetUriAsync(false);
-                    UpdateLists();
+
+                    //MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(36.731129, 10.2387584), Distance.FromKilometers(0.3)));
+                    
+                    
+                    //TryChatConnect();
+
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        MyMap.CustomPins = new List<CustomPins>();
+
+                    });
+
+                    await UpdateLists();
                    
                 }
                 catch (Exception ex)
                 {
+                    await DisplayAlert("error", ex.Message, "OK");
                     await Task.Delay(2000);
                     //await DisplayAlert("error", "balizz open geolocation ", "OK");
-                    await DisplayAlert("error", ex.Message, "OK");
+                   
                     await updateMap();
                 }
 
@@ -171,20 +236,24 @@ namespace pikappDes
                 {
                     UserList.Clear();
 
-
-                    string res = await Utility.GetList(Uri.ToString(), Mycreds); // PERFORMANCE HIT
-
+                    string res;
+                    
+                    res = await Utility.GetList(Uri.ToString(), Mycreds); // PERFORMANCE HIT
+                   
                     if (res != "ERROR")
                     {
                         UserList = JsonConvert.DeserializeObject<List<UserProp>>(res);
 
+                        MainThread.BeginInvokeOnMainThread(() =>
+                        {
+                            MyMap.Pins.Clear();
+                            if (Preferences.Get("T", "") == "Client")
+                                PopulateCustomTaxi(); //=========================== populate map with pins GENERIC
+                            else
+                                PopulateCustomClient(); //============== populate map with pins OTHER
 
-                        MyMap.Pins.Clear();
-                        if (Preferences.Get("T", "") == "Client")
-                            PopulateCustomTaxi(); //=========================== populate map with pins GENERIC
-                        else
-                            PopulateCustomClient(); //============== populate map with pins OTHER
-
+                        });
+                       
                     }
                     if(res == "ERROR1")
                     {
@@ -232,7 +301,7 @@ namespace pikappDes
                
                 //await DisplayAlert(pin.Name, pin.Pos, "OK");
 
-                pin.InfoWindowClicked += pin_clicked;
+                pin.MarkerClicked += pin_clicked;
 
 
 
@@ -264,7 +333,7 @@ namespace pikappDes
 
                
 
-                pin.InfoWindowClicked += pin_clicked;
+                //pin.MarkerClicked += pin_clicked;
 
 
                 MyMap.CustomPins.Add(pin);
@@ -305,10 +374,10 @@ namespace pikappDes
         
         private void pin_clicked(object sender, EventArgs e)
         {
+            DisplayAlert("Sent", "sending shit request", "Kk");
             CustomPins selected_pin = (CustomPins)sender;
 
-            TryChatConnect();
-
+            
             int secret = rn.Next(1, 9999);
 
             _chat.AddPendingReq(secret, selected_pin.UID);
@@ -334,7 +403,7 @@ namespace pikappDes
 
         private void Msgs_taped(object send,EventArgs e)
         {
-            DisplayAlert("tes", "test for msgs button", "Ok");
+            DisplayAlert("test", "show msgs or naah xD ?", "Idk");
         }
 
         private void OnChatError(string msg)

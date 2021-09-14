@@ -25,7 +25,9 @@ namespace pikappDes
 
             InitializeComponent();
             SecretInt = secret;
-            Name_label.Text = UID;
+            //Name_label.Text = UID;
+            //Name_label.Text = Utility.GetProfile(Utility.GetUri(false).Result,Mycreds, UID).Result;
+            Name_label.Text = "Client name";
             profilUID = UID;
             Mycreds = creds;
 
