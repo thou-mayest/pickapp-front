@@ -1,7 +1,7 @@
 # pickapp front
  
  - new todo list:
-   Directions API
+   Directions API /n
    twilio implement 
    select distination : mapclicked event handler/ e.position.latitute..) / dist in popup
    ad hoc VS google play distrubtion
