@@ -4,6 +4,7 @@ using System.Linq;
 
 using Foundation;
 using UIKit;
+using Lottie.Forms.Platforms.Ios;
 
 namespace pikappDes.iOS
 {
@@ -23,6 +24,8 @@ namespace pikappDes.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
+
+            
             Xamarin.FormsMaps.Init();
             LoadApplication(new App());
             return base.FinishedLaunching(app, options);

@@ -121,5 +121,14 @@ namespace pikappDes
             Navigation.PushAsync(new ProAccPage(), true);
 
         }
+
+        private void TestingDesing(object sender, EventArgs e)
+        {
+
+            //Creds Mycreds = new Creds();
+            //var popup = new PingPage("uid", 1234, Mycreds);
+
+            //App.Current.MainPage.Navigation.PushPopupAsync(popup, true);
+        }
     }
 }

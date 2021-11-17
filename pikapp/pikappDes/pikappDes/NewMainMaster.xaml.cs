@@ -75,6 +75,21 @@ namespace pikappDes
                 return;
                 
             }
+            else
+            {
+
+                NavigationPage navpage;
+
+                pages.TryGetValue(item.Id, out navpage);
+                navpage.Title = item.Title;
+
+                Detail = navpage;
+                Detail.Title = item.Title;
+
+                IsPresented = false;
+
+                MasterPage.MenuListViw.SelectedItem = null;
+            }
 
             // ===================== original
 
@@ -88,17 +103,6 @@ namespace pikappDes
 
             // ============================== NEW
 
-            NavigationPage navpage;
-
-            pages.TryGetValue(item.Id, out navpage);
-            navpage.Title = item.Title;
-
-            Detail = navpage;
-            Detail.Title = item.Title;
-
-            IsPresented = false;
-
-            MasterPage.MenuListViw.SelectedItem = null;
         }
         public async Task KillMe()
         {

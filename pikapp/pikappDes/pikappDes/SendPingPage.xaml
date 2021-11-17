@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+                 xmlns:Lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms" 
+                 xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+                 x:Class="pikappDes.SendPingPage">
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation 
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="0.5"
+            ScaleOut="1.2"
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinIn"
+            EasingOut="SinOut"
+            HasBackgroundAnimation="True"/>
+    </pages:PopupPage.Animation>
+    <!--You can use any elements here which are extended from Xamarin.Forms.View-->
+
+
+    <StackLayout
+        BackgroundColor="Transparent"
+        VerticalOptions="Center" 
+        HorizontalOptions="Fill" 
+        HeightRequest="300"
+        Padding="0, 0, 0, 0">
+
+        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+
+
+            <Frame Margin="10,25,10,0" Padding="0" CornerRadius="30" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <Image Source="pingPageBackground.png" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Aspect="AspectFill"></Image>
+            </Frame>
+            <StackLayout>
+                <pancake:PancakeView HorizontalOptions="Center" VerticalOptions="Start" Margin="0" Padding="0" CornerRadius="80" WidthRequest="60" HeightRequest="60" BackgroundColor="Black">
+                    <pancake:PancakeView.Shadow>
+                        <pancake:DropShadow Color="#000000" Offset="25,25" Opacity="100" />
+                    </pancake:PancakeView.Shadow>
+                    <Image Source="logo1.png" WidthRequest="60" HeightRequest="60"></Image>
+                </pancake:PancakeView>
+            </StackLayout>
+            
+            <!--Frame HasShadow="True" HorizontalOptions="Center" VerticalOptions="Start" Margin="0" Padding="0" WidthRequest="60" HeightRequest="60" CornerRadius="80" BackgroundColor="Black">
+                <Image Source="logo1.png" WidthRequest="80" HeightRequest="80"></Image>
+            </Frame-->
+
+
+            <Frame 
+                HeightRequest="250"
+                BackgroundColor="Transparent"
+                HorizontalOptions="Fill"
+                VerticalOptions="FillAndExpand"
+                CornerRadius= "30"
+                Padding="0,0,0,0">
+                <StackLayout >
+                    <StackLayout Padding="0" Orientation="Horizontal">
+
+                        <StackLayout Padding="20,60,0,0" HorizontalOptions="FillAndExpand">
+                            <Label Margin="0,5,0,0" Text="Tarif:    2dt(prise en charge)" TextColor="Black" FontSize="Large"></Label>
+                            <Label Margin="0,5,0,0" Text=" + compteur" HorizontalOptions="Center" TextColor="Black" FontSize="Large"></Label>
+                            <Label Margin="0,10,0,0" HorizontalOptions="Center" x:Name="Name_label" Text="Name......?" TextColor="Black" FontSize="Large"></Label>
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout HeightRequest="40" Padding="0" VerticalOptions="Center">
+                        <Image Source="rating.png"/>
+                    </StackLayout>
+                    <StackLayout VerticalOptions="EndAndExpand" HorizontalOptions="Fill" Orientation="Horizontal">
+                        <Grid HorizontalOptions="FillAndExpand">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <!--Button Margin="10,0,0,0" Padding="0" Grid.Column="0" Text="Send request" TextColor="Black" CornerRadius="20"  BackgroundColor="White" Clicked="SendReq_Clicked"></Button-->
+                            <StackLayout Grid.Column="0" BackgroundColor="Transparent">
+                                <Lottie:AnimationView
+                                Margin="10,0,0,0" 
+                                x:Name="AnimatedButton"
+                                HeightRequest="70"
+                                WidthRequest="70"
+                                Animation="sent_animation1.json"
+                                AutoPlay="False"
+                                Clicked="SendReq_Clicked">
+
+                                </Lottie:AnimationView>
+                            </StackLayout>
+                            
+                            <Button Margin="0,0,10,0"  Padding="0" Grid.Column="1" Text="Cancel" TextColor="Black" CornerRadius="20" BackgroundColor="#FEDFB6" Clicked="Cancel_Clicked"></Button>
+                        </Grid>
+                    </StackLayout>
+
+                </StackLayout>
+
+            </Frame>
+        </Grid>
+    </StackLayout>
+</pages:PopupPage>

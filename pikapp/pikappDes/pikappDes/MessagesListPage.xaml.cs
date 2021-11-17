@@ -110,6 +110,8 @@ namespace pikappDes
             try
             {
                 ChatRoomsCollection.Clear();
+                LoadingIndicator.IsRunning = false;
+                LoadingIndicator.IsVisible = false;
                 foreach (ChatRoomProp item in ResChatRooms)
                 {
                     //var existingItem = ChatRoomsCollection.Where(x => x.RID == item.RID);

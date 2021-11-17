@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:local="clr-namespace:pikappDes;assembly=pikappDes"
+             xmlns:local="clr-namespace:pikappDes;assembly=pikappDes" 
+             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              mc:Ignorable="d"
              BackgroundImageSource="background.jpg"
              x:Class="pikappDes.MessagesPage">
@@ -11,10 +12,27 @@
         <ResourceDictionary>
             <DataTemplate x:Key="MyMsgTemplate">
                 <ViewCell>
-                    <StackLayout HorizontalOptions="End">
-                        <Frame Margin="5" CornerRadius="25" Padding="15,10" BackgroundColor="#F2CB05">
+                    <StackLayout Padding="-3" HorizontalOptions="End">
+                        
+                        <!--Grid HorizontalOptions="End">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Frame Margin="5" BackgroundColor="#F2CB05" CornerRadius="10" HorizontalOptions="End">
+
+                            </Frame>
+                            <Frame Margin="5" CornerRadius="25" Padding="15,10" BackgroundColor="#F2CB05">
+                                <Label HorizontalOptions="Center" TextColor="Black" FontSize="Medium" Text="{Binding msg}"></Label>
+                            </Frame>
+                        </Grid-->
+                        <pancake:PancakeView Margin="5" CornerRadius="40,40,40,10" Padding="15,10" BackgroundColor="#F2CB05">
                             <Label HorizontalOptions="Center" TextColor="Black" FontSize="Medium" Text="{Binding msg}"></Label>
-                        </Frame>
+                        </pancake:PancakeView>
+                        
                     </StackLayout>
                 </ViewCell>
             </DataTemplate>

@@ -18,6 +18,7 @@ namespace pikappDes
         int SecretInt;
         string profilUID;
         Creds Mycreds;
+
         public PingPage(string UID,int secret,Creds creds)
         {
             
@@ -27,11 +28,9 @@ namespace pikappDes
             SecretInt = secret;
             //Name_label.Text = UID;
             //Name_label.Text = Utility.GetProfile(Utility.GetUri(false).Result,Mycreds, UID).Result;
-            Name_label.Text = "Client name";
+            Name_label.Text = "Faouzi weld falten";
             profilUID = UID;
             Mycreds = creds;
-
-
         }
 
 
@@ -111,11 +110,14 @@ namespace pikappDes
         private void Accept_Clicked(object sender, EventArgs e)
         {
             _chat.AcceptPing(SecretInt,profilUID,Mycreds);
+            Navigation.PopPopupAsync();
+            Navigation.PushAsync(new MessagesListPage());
         }
 
         private void Reject_Clicked(object sender, EventArgs e)
         {
             Navigation.PopPopupAsync();
+            
         }
     }
 }

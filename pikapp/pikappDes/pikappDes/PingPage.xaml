@@ -19,35 +19,43 @@
             HasBackgroundAnimation="True"/>
     </pages:PopupPage.Animation>
     <!--You can use any elements here which are extended from Xamarin.Forms.View-->
+    
+    
     <StackLayout
-       
-        VerticalOptions="EndAndExpand" 
+        BackgroundColor="Transparent"
+        VerticalOptions="Center" 
         HorizontalOptions="Fill" 
         HeightRequest="300"
         Padding="0, 0, 0, 0">
+        
         <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-            <Frame Padding="0" CornerRadius="30" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+           
+
+            <Frame Margin="10,25,10,0" Padding="0" CornerRadius="30" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                 <Image Source="pingPageBackground.png" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Aspect="AspectFill"></Image>
             </Frame>
+            <Frame HasShadow="True" HorizontalOptions="Center" VerticalOptions="Start" Margin="0" Padding="0" WidthRequest="60" HeightRequest="60" CornerRadius="80" BackgroundColor="Black">
+                <Image Source="logo1.png" WidthRequest="80" HeightRequest="80"></Image>
+            </Frame>
             
+
             <Frame 
+                HeightRequest="250"
                 BackgroundColor="Transparent"
                 HorizontalOptions="Fill"
                 VerticalOptions="FillAndExpand"
                 CornerRadius= "30"
                 Padding="0,0,0,0">
             <StackLayout >
-                <StackLayout Orientation="Horizontal">
-                        <Frame Margin="5" Padding="0" WidthRequest="85" HeightRequest="60" CornerRadius="80" BackgroundColor="Black"> 
-                            <Image Source="logo1.png" WidthRequest="80" HeightRequest="80"></Image>
-                        </Frame>
-                    
-                    <StackLayout Padding="20">
-                        <Label x:Name="Name_label" Text="Name......?" TextColor="Black" FontSize="Large"></Label>
-                        <Label Text="" TextColor="Black" FontSize="Large"></Label>
+                <StackLayout Padding="0" Orientation="Horizontal">
+                        
+                    <StackLayout Padding="20,60,0,0" HorizontalOptions="FillAndExpand">
+                        <Label Margin="0,10,0,0" HorizontalOptions="Center" x:Name="Name_label" Text="Name......?" TextColor="Black" FontSize="Large"></Label>
+                        <Label Margin="0,5,0,0" Text="Tarif:    8dt(prise en charge)" TextColor="Black" FontSize="Large"></Label>
+                        <Label Margin="0,5,0,0" Text=" + compteur" HorizontalOptions="Center" TextColor="Black" FontSize="Large"></Label>
                     </StackLayout>
                 </StackLayout>
-                <StackLayout VerticalOptions="Center">
+                <StackLayout HeightRequest="40" Padding="0" VerticalOptions="Center">
                     <Image Source="rating.png"/>
                 </StackLayout>
                 <StackLayout VerticalOptions="EndAndExpand" HorizontalOptions="Fill" Orientation="Horizontal">
@@ -56,8 +64,8 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Padding="0" Grid.Column="0" Text="Accept" TextColor="Black" CornerRadius="20"  BackgroundColor="Green" Clicked="Accept_Clicked"></Button>
-                        <Button Padding="0" Grid.Column="1" Text="Reject" TextColor="Black" CornerRadius="20" Background="red" Clicked="Reject_Clicked"></Button>
+                            <Button Margin="10,0,0,0" Padding="0" Grid.Column="0" Text="Accept" TextColor="Black" CornerRadius="20"  BackgroundColor="White" Clicked="Accept_Clicked"></Button>
+                            <Button Margin="0,0,10,0"  Padding="0" Grid.Column="1" Text="Reject" TextColor="Black" CornerRadius="20" BackgroundColor="#FEDFB6" Clicked="Reject_Clicked"></Button>
                     </Grid>
                 </StackLayout>
                

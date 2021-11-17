@@ -53,13 +53,14 @@ namespace pikappDes.Utils
             //{
             //    await GetLnk();
             //}
-            
+
             //if (!err)
             //    return uri;
             //else
             //    return null;
-            uri = "https://pickapp-service.herokuapp.com" + "/api/values";
-            return uri;
+            //uri = "https://pickapp-service.herokuapp.com" + "/api/values";
+            string uritemp = "https://27ad-197-1-79-179.ngrok.io" + "/api/values";
+            return uritemp;
         }
 
         public static async Task<string> LoginReq(string baseURI,Creds item,string login_t)

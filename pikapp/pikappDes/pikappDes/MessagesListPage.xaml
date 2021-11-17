@@ -14,28 +14,32 @@
                         <Entry HorizontalOptions="FillAndExpand" Placeholder="Search" BackgroundColor="Transparent"></Entry>
                     </StackLayout>
                 </Frame>
-                <ListView BackgroundColor="Transparent" x:Name="ChatRoomsListView" ItemsSource="{Binding Chatrooms}" RowHeight="100" SeparatorVisibility="None">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <Frame HasShadow="True" BorderColor="White" CornerRadius="7" BackgroundColor="White" Padding="10" Margin="10" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-                                    <StackLayout Orientation="Horizontal" HeightRequest="400" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-                                        <StackLayout Padding="2">
-                                            <Frame BackgroundColor="Transparent" HeightRequest="40" Padding="2">
-                                                <Image VerticalOptions="CenterAndExpand" Source="eaxi.png" BackgroundColor="Transparent" Margin="0" Aspect="AspectFill" ></Image>
-                                            </Frame>
-                                        </StackLayout>
-                                        <StackLayout Padding="0" Margin="0" VerticalOptions="FillAndExpand">
-                                            <Label Padding="0" Text="{Binding Duser.name}" FontSize="Title" TextColor="Black" VerticalOptions="StartAndExpand"></Label>
-                                            <Label Padding="0" Text="{Binding LastMessage.msg}" FontSize="Subtitle" TextColor="DarkSlateGray" VerticalOptions="StartAndExpand"></Label>
-                                        </StackLayout>
+                <Grid>
+                    <ActivityIndicator x:Name="LoadingIndicator" IsVisible="true" IsRunning="True" Color="Orange"></ActivityIndicator>
+                    <ListView BackgroundColor="Transparent" x:Name="ChatRoomsListView" ItemsSource="{Binding Chatrooms}" RowHeight="100" SeparatorVisibility="None">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Frame HasShadow="True" BorderColor="White" CornerRadius="7" BackgroundColor="White" Padding="10" Margin="10" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                                        <StackLayout Orientation="Horizontal" HeightRequest="400" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                                            <StackLayout Padding="2">
+                                                <Frame BackgroundColor="Transparent" HeightRequest="40" Padding="2">
+                                                    <Image VerticalOptions="CenterAndExpand" Source="eaxi.png" BackgroundColor="Transparent" Margin="0" Aspect="AspectFill" ></Image>
+                                                </Frame>
+                                            </StackLayout>
+                                            <StackLayout Padding="0" Margin="0" VerticalOptions="FillAndExpand">
+                                                <Label Padding="0" Text="{Binding Duser.name}" FontSize="Title" TextColor="Black" VerticalOptions="StartAndExpand"></Label>
+                                                <Label Padding="0" Text="{Binding LastMessage.msg}" FontSize="Subtitle" TextColor="DarkSlateGray" VerticalOptions="StartAndExpand"></Label>
+                                            </StackLayout>
 
-                                    </StackLayout>
-                                </Frame>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                                        </StackLayout>
+                                    </Frame>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+                
             </StackLayout>
         </AbsoluteLayout>
     </ContentPage.Content>

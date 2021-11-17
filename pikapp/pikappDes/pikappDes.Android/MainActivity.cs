@@ -6,6 +6,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Lottie.Forms.Platforms.Android;
 
 namespace pikappDes.Droid
 {
@@ -20,7 +21,8 @@ namespace pikappDes.Droid
             Rg.Plugins.Popup.Popup.Init(this) ;
 
             base.OnCreate(savedInstanceState);
-
+            
+            
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());

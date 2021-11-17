@@ -65,7 +65,15 @@ namespace pikappDes.Utils
 
         public async Task Connect()
         {
-            await ConnectionHub.StartAsync();
+            try
+            {
+                await ConnectionHub.StartAsync();
+            }
+            catch (Exception)
+            {
+
+            }
+            
         }
 
        

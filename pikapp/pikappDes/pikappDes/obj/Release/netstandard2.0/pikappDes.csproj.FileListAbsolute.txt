@@ -25,3 +25,4 @@ C:\Users\brahmi\Desktop\projects\PickApp\dev\pickapp project\pickapp-front\pikap
 C:\Users\brahmi\Desktop\projects\PickApp\dev\pickapp project\pickapp-front\pikapp\pikappDes\pikappDes\obj\Release\netstandard2.0\ref\pikappDes.dll
 C:\Users\brahmi\Desktop\projects\PickApp\dev\pickapp project\pickapp-front\pikapp\pikappDes\pikappDes\obj\Release\netstandard2.0\pikappDes.pdb
 C:\Users\brahmi\Desktop\projects\PickApp\dev\pickapp project\pickapp-front\pikapp\pikappDes\pikappDes\obj\Release\netstandard2.0\pikappDes.csproj.AssemblyReference.cache
+C:\Users\brahmi\Desktop\projects\PickApp\dev\pickapp project\pickapp-front\pikapp\pikappDes\pikappDes\obj\Release\netstandard2.0\SendPingPage.xaml.g.cs

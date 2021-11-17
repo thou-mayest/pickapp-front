@@ -90,6 +90,9 @@ namespace pikappDes.Droid
             //marker.SetSnippet(pin.Address);
             marker.SetTitle(string.Empty);
             marker.SetSnippet(string.Empty);
+            //////////////////////////////////////////////////
+            ///         GET CUSTOM PIN TO CHANGE FOR MULTIPLE TYPES FO VEHICULES
+            ///         ///////////////////////////////
             if (pin.Type == PinType.Generic)
                 marker.SetIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.pinS)); // ================ PUT AN ICON HERE
             else

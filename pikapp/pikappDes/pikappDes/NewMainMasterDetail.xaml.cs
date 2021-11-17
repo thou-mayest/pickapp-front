@@ -190,10 +190,8 @@ namespace pikappDes
 
                     MainThread.BeginInvokeOnMainThread(() =>
                     {
-                        MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(posGPS.Latitude, posGPS.Longitude), Distance.FromKilometers(0.3)));
-
                         MyMap.IsVisible = true;
-
+                        MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(posGPS.Latitude, posGPS.Longitude), Distance.FromKilometers(0.3)));
                         MyMap.IsShowingUser = true;
                         
                     });
@@ -290,8 +288,8 @@ namespace pikappDes
                     Address = item.pos,
 
                     UID = item.UID,
+                    type = ClienType.Taxi,
                     Type = PinType.Generic,
-
                     phone = item.phone,
                     Position = new Position(Convert.ToDouble(item.pos.Split('/')[0]), Convert.ToDouble(item.pos.Split('/')[1]))
 
@@ -374,29 +372,32 @@ namespace pikappDes
         
         private void pin_clicked(object sender, EventArgs e)
         {
-            DisplayAlert("Sent", "sending shit request", "Kk");
+
+
+            //DisplayAlert("Sent", "sending shit request", "Kk");
             CustomPins selected_pin = (CustomPins)sender;
 
-            
-            int secret = rn.Next(1, 9999);
 
-            _chat.AddPendingReq(secret, selected_pin.UID);
+            var SendReqpopup = new SendPingPage(selected_pin.UID, Mycreds);
 
-            try
-            {
-                
-                _chat.SendPing(selected_pin.UID, Mycreds,secret);
-                
-            }
-            catch (Exception)
-            {
-                TryChatConnect();
-                DisplayAlert("Error", "connection fail try again", "Ok");
+            App.Current.MainPage.Navigation.PushPopupAsync(SendReqpopup, true);
 
-            }
+            //int secret = rn.Next(1, 9999);
 
-            
+            //_chat.AddPendingReq(secret, selected_pin.UID);
 
+            //try
+            //{
+
+            //    _chat.SendPing(selected_pin.UID, Mycreds,secret);
+
+            //}
+            //catch (Exception)
+            //{
+            //    TryChatConnect();
+            //    DisplayAlert("Error", "connection fail try again", "Ok");
+
+            //}
             //PhoneDialer.Open(selected_pin.Phone.ToString());
             //Launcher.OpenAsync(new Uri("tel:"+selected_pin.phone.ToString()));
         }
@@ -428,17 +429,13 @@ namespace pikappDes
             {
                
                 _chat.CreateRoom(Mycreds,RID,uid);
-                DisplayAlert("Accepted", "request accepted you can chat now ", "Ok");
-
-
-
-
+                DisplayAlert("Accepted", "request accepted you can chat now ", "Ok"); //CALL THIS ON THE OTHER CLIENT 
                 Navigation.PushAsync(new MessagesListPage());
 
             }
             else
             {
-                DisplayAlert("ERROR", "SECRET MISSMATCH", "OK"); //// FOR TEST ONLY /// PROB CHALLENGE??
+                DisplayAlert("Ok", "missmatch error", "Ok"); //// FOR TEST ONLY /// PROB CHALLENGE??
             }
 
         }

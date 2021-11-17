@@ -4,6 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
+             xmlns:Lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms" 
              x:Class="pikappDes.MainPage"
              NavigationPage.HasNavigationBar="False">
     <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
@@ -20,11 +21,25 @@
             <Frame HasShadow="True" BorderColor="Black" BackgroundColor="#E3BD24" CornerRadius="30" HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
                 <Label Text="PICKAPP" FontAttributes="Bold" FontSize="Large" TextColor="black" HorizontalOptions="Center"></Label>
             </Frame>
+            <StackLayout
+                 HeightRequest="70"
+                 WidthRequest="70"
+                BackgroundColor="Transparent">
+                <Lottie:AnimationView
+                                Margin="10,0,0,0" 
+                                x:Name="AnimatedButton"
+                                HeightRequest="70"
+                                WidthRequest="70"
+                                Animation="sent_animation1.json"
+                                AutoPlay="True">
 
+                </Lottie:AnimationView>
+            </StackLayout>
+            
             <Button Margin="10,10,10,5" CornerRadius="20" VerticalOptions="End" Text="Login" TextColor="black" FontSize="Medium" BackgroundColor="#E3BD24" Clicked="Login_Clicked" WidthRequest="200">
 
             </Button>
-                <Button x:Name="ContactButton" Margin="10,0,10,20" CornerRadius="20" VerticalOptions="End" Text="Contact Us" TextColor="white" FontSize="Medium" BackgroundColor="#273251" Clicked="ContactButton_Clicked">
+                <Button x:Name="ContactButton" Margin="10,0,10,20" CornerRadius="20" VerticalOptions="End" Text="Contact Us" TextColor="white" FontSize="Medium" BackgroundColor="#273251" Clicked="TestingDesing">
 
                 </Button>
         </StackLayout>
