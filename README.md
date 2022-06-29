@@ -6,4 +6,4 @@
   - select distination : mapclicked event handler/ e.position.latitute..) / dist in popup
   - ad hoc VS google play distrubtion
   - messages empty error "HUB NOT CON.."
-  - change heroku server to europe
+  - change heroku server location to europe
